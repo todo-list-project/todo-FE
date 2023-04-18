@@ -1,0 +1,21 @@
+.my-page {
+  .info {
+    display: flex;
+  }
+  .aside {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    min-width: 180px;
+    > ul > li {
+      margin-bottom: 16px;
+    }
+    strong {
+      display: block;
+    }
+  }
+  .content-item {
+    display: flex;
+    width: 100%;
+  }
+}
