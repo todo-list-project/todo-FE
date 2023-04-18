@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import App from "./App";
-import './assets/style/index.scss';
+import "./assets/style/index.scss";
 import reportWebVitals from "./reportWebVitals";
 
 const queryClient = new QueryClient({
@@ -18,11 +18,11 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Router>
+    <HashRouter basename={"/"}>
       <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
-    </Router>
+    </HashRouter>
   </React.StrictMode>
 );
 

@@ -1,0 +1,17 @@
+.todo-tab {
+  display: flex;
+  margin: 40px auto 0 auto;
+  margin-bottom: 40px;
+  width: fit-content;
+  gap: 20px;
+  .tab-item {
+    padding: 4px 4px 4px 6px;
+    font-size: 14px;
+    color: #ccc;
+    cursor: pointer;
+    &.is-active {
+      color: black;
+      border-bottom: 1px solid black;
+    }
+  }
+}

@@ -1,1 +1,23 @@
 @import 'assets/style/function.scss';
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 50px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  // NOTE: 반응형 예제. 768에서 분기처리
+  @include media-mo {
+    border-bottom: none;
+  }
+  .user {
+    position: absolute;
+    right: 20px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: fit-content;
+  }
+}
