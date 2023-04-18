@@ -1,5 +1,7 @@
 import classNames from "classnames";
 import { Link } from "react-router-dom";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./header.scss";
 
 const Header = () => {
@@ -13,7 +15,11 @@ const Header = () => {
             // NOTE: 유저정보가 있을 경우
             // auth && <div>유저정보</div>
           }
-          <div className="mypage">마이페이지(유저 아이콘)</div>
+          <div className="mypage">
+            <Link to="/mypage">
+              <FontAwesomeIcon icon={faUser} />
+            </Link>
+          </div>
         </div>
       </header>
     </>

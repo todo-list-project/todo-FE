@@ -1,3 +1,11 @@
+.tab {
+  .tab-item {
+    font-size: 16px;
+    color: #76767a;
+    cursor: pointer;
+  }
+}
+
 .todo-tab {
   display: flex;
   margin: 40px auto 0 auto;
@@ -6,12 +14,11 @@
   gap: 20px;
   .tab-item {
     padding: 4px 4px 4px 6px;
-    font-size: 14px;
-    color: #ccc;
-    cursor: pointer;
     &.is-active {
+      font-weight: 600;
       color: black;
       border-bottom: 1px solid black;
     }
   }
 }
+
