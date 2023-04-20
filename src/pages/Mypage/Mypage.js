@@ -6,9 +6,12 @@ import Header from "components/header/Header";
 const Mypage = () => {
   return (
     <div className="page my-page">
+      <Header />
       <div className="content">
-        내 정보가 보이는 부분, <br />총 할일 목록(내 할일 + 공유된 할일 + 완료된
-        할일), 좋아요
+        <div className="desc">
+          내 정보가 보이는 부분, <br />총 할일 목록(내 할일 + 공유된 할일 +
+          완료된 할일), 좋아요
+        </div>
         <div className="info">
           <div className="aside">
             <ul>
@@ -26,7 +29,7 @@ const Mypage = () => {
                 </ul>
               </li>
             </ul>
-            <Button>계정탈퇴</Button>
+            <Button classname="default-button delete-button">계정탈퇴</Button>
           </div>
           <div className="content-item">왼쪽의 탭마다 다른 선택한 내용</div>
         </div>

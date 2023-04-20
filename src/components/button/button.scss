@@ -7,3 +7,12 @@
 .add-button {
   display: flex;
 }
+
+.noline-button {
+  background: none;
+}
+
+.line-button {
+  background: none;
+  border: 1px solid #ccc;
+}
