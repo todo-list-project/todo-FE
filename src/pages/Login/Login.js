@@ -1,11 +1,104 @@
-import React from 'react'
+import axios from "axios";
+import React from "react";
+import { useForm } from "react-hook-form";
+import "./login.scss";
+import Header from "components/header/Header";
 
 const Login = () => {
-  return (
-    <div className='page login-page'>
-      
-    </div>
-  )
-}
+  const onSubmit = async (data) => {
+    await new Promise((r) => setTimeout(r, 1000));
 
-export default Login
+    // axios
+    //   .post(`https://url`, {
+    //     modelName: data["modelName"],
+    //     brand: data["brand"],
+    //     price: data["price"],
+    //     // size: data["size"],
+    //   })
+    //   .then(function (response) {
+    //     // console.log("dta", response.data);
+    //     alert("회원가입 완료");
+    //   })
+    //   .catch(function (error) {
+    //     // 오류발생시 실행
+    //   })
+    //   .then(function () {
+    //     // 항상 실행
+    //   });
+    console.log("data", data);
+  };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting, isDirty, errors },
+  } = useForm({ mode: "onChange" });
+
+  return (
+    <div className="page login-page">
+      <Header />
+      <div className="content">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="input-wrap">
+            <label htmlFor="id">아이디</label>
+            <input
+              id="id"
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              aria-invalid={!isDirty ? undefined : errors.id ? "true" : "false"}
+              {...register("id", {
+                required: "아이디는 필수 입력입니다.",
+                minLength: {
+                  value: 4,
+                  message: "4글자 이상 입력해주세요.",
+                },
+              })}
+            />
+            {errors.id && <small role="alert">{errors.id.message}</small>}
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="password">비밀번호</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              aria-invalid={
+                !isDirty ? undefined : errors.password ? "true" : "false"
+              }
+              {...register("password", {
+                required: "비밀번호는 필수 입력입니다.",
+                minLength: {
+                  value: 8,
+                  message: "8자리 이상 비밀번호를 사용해주세요.",
+                },
+              })}
+            />
+            {errors.password && (
+              <small role="alert">{errors.password.message}</small>
+            )}
+          </div>
+          <div className="button-wrap">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="default-button submit-button"
+            >
+              로그인
+            </button>
+          </div>
+        </form>
+        <div>
+          <div className="search-regist">
+            <button className="noline-button">계정 찾기</button>
+            <div className="divider"></div>
+            <button className="noline-button">비밀번호 찾기</button>
+          </div>
+          <button className="default-button line-button submit-button">회원가입</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

@@ -12,8 +12,13 @@
   @include media-mo {
     border-bottom: none;
   }
-  .user {
+  .home, .user {
     position: absolute;
+  }
+  .home {
+    left: 20px;
+  }
+  .user {
     right: 20px;
     top: 0;
     bottom: 0;
