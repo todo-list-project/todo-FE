@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import './button.scss';
 
 const Button = ({ children, classname, onClick }) => {
