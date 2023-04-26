@@ -14,3 +14,21 @@
     text-align: center;
   }
 }
+
+.calenderWrap {
+  width: 340px;
+  height: 300px;
+  position: absolute;
+  z-index: 99999;
+  left: 3.1%;
+  top: 93%;
+  transition: all 0.3 ease-in-out;
+}
+.ant-picker-calendar-header {
+  justify-content: flex-start !important;
+  padding: 10px 8px !important;
+}
+
+.ant-picker-calendar-date-content {
+  height: 20px !important;
+}

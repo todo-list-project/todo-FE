@@ -6,20 +6,24 @@ import Tab from 'components/tab/Tab';
 import TodoList from 'components/todoList/TodoList';
 import WriteModal from 'components/portalModal/writeModal/WriteModal';
 import ControllerBox from 'layout/controllerBox/ControllerBox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Main = () => {
   const [onModal, setOnModal] = useState(false);
   const [visible, setVisible] = useState(false);
-  // const modal = useSelector((state) => state.modal.value);
-  const [todoData, setTodoData] = useState([]);
+
+  const [todoData, setTodoData] = useState('');
+
+  // console.log('할일추가 ', todoData);
   const handleModalCancel = () => {
     setVisible(false);
   };
 
   const handleModalSave = (value) => {
+    // console.log('넘어오냐?', value);
     // Perform actions on the saved value
     setTodoData(value);
+    setVisible(false);
   };
 
   return (

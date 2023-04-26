@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TodoItem from './TodoItem';
 import './todo.scss';
 
@@ -59,7 +59,9 @@ const dummyData = [
 
 const TodoList = ({ data }) => {
   // NOTE: 추후 intersection observer 를 쓰기 위하여 목록과 아이템 분리
-  console.log(data);
+
+  const [todoName, setTodoName] = useState();
+
   return (
     <div className="todo-list">
       {dummyData &&
