@@ -4,9 +4,9 @@ import '../writeModal/writemodal.scss';
 
 const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
   const [value, setValue] = useState(initialValue);
-  const [isChecked, setIsChecked] = useState(false);
-  const [checkDay, setCheckDay] = useState();
-  const [calendar, setCalendar] = useState(false);
+  const [isChecked, setIsChecked] = useState(false); //친구에게만 보이기
+  const [checkDay, setCheckDay] = useState(); // 달력 날짜
+  const [calendar, setCalendar] = useState(false); // 달력 오픈
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -22,9 +22,10 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
     setCalendar(!calendar);
   };
 
-  const onPanelChange = (e, mode) => {
-    console.log(mode);
-    setCheckDay(e.$d);
+  const handleSelect = (data) => {
+    // console.log(mode);
+    // console.log('선택', data);
+    setCheckDay(data.$d);
   };
 
   const openClender = () => {
@@ -51,11 +52,10 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
         </Button>
       </div>
       <Button onClick={openClender}>달력</Button>
+
       {calendar && (
         <div className="calenderWrap">
-          <Calendar style={{}} onPanelChange={onPanelChange}>
-            달력
-          </Calendar>
+          <Calendar onSelect={handleSelect} />
         </div>
       )}
     </Modal>
