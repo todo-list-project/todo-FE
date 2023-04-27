@@ -1,6 +1,7 @@
 import Button from "components/button/Button";
 import Header from "components/header/Header";
 import { useState } from "react";
+import classnames from "classnames";
 import "./mypage.scss";
 
 const Mypage = () => {
@@ -24,14 +25,35 @@ const Mypage = () => {
               <li>
                 <strong>친구</strong>
                 <ul>
-                  <li onClick={() => clickTab("group-manage")}>그룹관리</li>
-                  <li onClick={() => clickTab(null)}>공유된 할일?</li>
+                  <li
+                    className={classnames("", {
+                      "is-select": tab === "group-manage",
+                    })}
+                    onClick={() => clickTab("group-manage")}
+                  >
+                    그룹관리
+                  </li>
+                  <li
+                    className={classnames("", {
+                      "is-select": tab === null,
+                    })}
+                    onClick={() => clickTab(null)}
+                  >
+                    공유된 할일?
+                  </li>
                 </ul>
               </li>
               <li>
                 <strong>계정</strong>
                 <ul>
-                  <li onClick={() => clickTab("account-edit")}>수정</li>
+                  <li
+                    className={classnames("", {
+                      "is-select": tab === "account-edit",
+                    })}
+                    onClick={() => clickTab("account-edit")}
+                  >
+                    수정
+                  </li>
                 </ul>
               </li>
             </ul>
