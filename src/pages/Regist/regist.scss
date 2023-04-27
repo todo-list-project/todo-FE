@@ -1,0 +1,56 @@
+.regist-page {
+  label,
+  small {
+    display: block;
+  }
+
+  small {
+    color: #ff5a5a;
+  }
+
+  .input-wrap {
+    margin-bottom: 20px;
+
+    input {
+      margin-top: 4px;
+      padding-left: 10px;
+      width: 100%;
+      height: 36px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  .content {
+    width: 600px;
+    margin-top: 70px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 40px 50px;
+    box-sizing: border-box;
+  }
+
+  .divider {
+    background: #ccc;
+    width: 1px;
+    height: 16px;
+  }
+
+  .default-button,
+  .line-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .search-regist {
+    display: flex;
+    justify-content: center;
+    margin-top: 90px;
+    margin-bottom: 10px;
+
+    button {
+      width: 100%;
+      justify-content: center;
+      height: 20px;
+    }
+  }
+}

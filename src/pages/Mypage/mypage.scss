@@ -1,0 +1,41 @@
+.my-page {
+  .info {
+    display: flex;
+    margin-top: 20px;
+    gap: 30px;
+  }
+  .aside {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    min-width: 180px;
+    > ul > li {
+      margin-bottom: 16px;
+      li {
+        line-height: 30px;
+        cursor: pointer;
+        &.is-select {
+          font-weight: bold;
+        }
+      }
+    }
+    strong {
+      display: block;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid black;
+    }
+  }
+  .desc {
+    margin-top: 60px;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  .content-item {
+    display: flex;
+    width: 100%;
+  }
+  .delete-button {
+    justify-content: center;
+  }
+}

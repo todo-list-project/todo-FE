@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import classNames from "classnames";
 import "./tab.scss";
 
-const Tab = ({ nav }) => {
+const Tab = ({ nav, classname }) => {
   const [tabActive, setTabActive] = useState(0);
 
   return (
-    <div className="tab todo-tab">
+    <div className={classNames("tab", classname)}>
       {nav &&
         nav.map((item, i) => (
           <div

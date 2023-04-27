@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import "./login.scss";
+import "./regist.scss";
 import Header from "components/header/Header";
 
 const Login = () => {
@@ -84,18 +84,10 @@ const Login = () => {
               disabled={isSubmitting}
               className="default-button submit-button"
             >
-              로그인
+              가입
             </button>
           </div>
         </form>
-        <div>
-          <div className="search-regist">
-            <button className="noline-button">계정 찾기</button>
-            <div className="divider"></div>
-            <button className="noline-button">비밀번호 찾기</button>
-          </div>
-          <button className="default-button line-button submit-button">회원가입</button>
-        </div>
       </div>
     </div>
   );
