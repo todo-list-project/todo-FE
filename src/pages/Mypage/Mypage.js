@@ -5,7 +5,7 @@ import classnames from "classnames";
 import "./mypage.scss";
 
 const Mypage = () => {
-  const [tab, setTab] = useState(null);
+  const [tab, setTab] = useState('');
 
   const clickTab = (type) => {
     setTab(type);
