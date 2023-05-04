@@ -34,8 +34,45 @@
   .content-item {
     display: flex;
     width: 100%;
+    &.is-group-manage {
+      gap: 20px;
+      .folder {
+        width: 40%;
+      }
+      .friend-list {
+        width: 100%;
+      }
+      .controll {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        svg {
+          cursor: pointer;
+        }
+      }
+      .folder-area {
+        min-height: 200px;
+        border: 1px solid #ccc;
+      }
+    }
+    &.is-account-edit {
+      align-items: center;
+      justify-content: center;
+    }
   }
   .delete-button {
     justify-content: center;
+  }
+
+  .user-chk {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+    gap: 20px;
+  }
+  .account-edit {
+    label {
+      cursor: auto;
+    }
   }
 }

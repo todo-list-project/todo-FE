@@ -1,29 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { HashRouter } from 'react-router-dom';
-import App from './App';
-import './assets/style/index.scss';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { HashRouter, unstable_HistoryRouter as Router } from "react-router-dom";
+import App from "./App";
+import history from "./hooks/useHistory";
+import "./assets/style/index.scss";
 
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from "./reportWebVitals";
 
 const queryClient = new QueryClient({
   onError: (error, query) => {
-    console.log('onError', error);
+    console.log("onError", error);
   },
   onSuccess: (data) => {
-    console.log('data:', data);
+    console.log("data:", data);
   },
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <HashRouter basename={'/'}>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <Router history={history}>
         <App />
-      </QueryClientProvider>
-    </HashRouter>
+      </Router>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 

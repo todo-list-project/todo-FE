@@ -3,6 +3,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "./regist.scss";
 import Header from "components/header/Header";
+import GoogleLogin from "components/snsLogin/GoogleLogin";
+import KakaoLogin from "components/snsLogin/KaKaoLogin";
 
 const Login = () => {
   const onSubmit = async (data) => {
@@ -36,7 +38,7 @@ const Login = () => {
   } = useForm({ mode: "onChange" });
 
   return (
-    <div className="page login-page">
+    <div className="page regist-page">
       <Header />
       <div className="content">
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -88,6 +90,10 @@ const Login = () => {
             </button>
           </div>
         </form>
+        <div className="social-login">
+          <GoogleLogin />
+          <KakaoLogin />
+        </div>
       </div>
     </div>
   );

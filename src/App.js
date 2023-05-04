@@ -9,10 +9,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path={"/"} element={<Main />} />
-        <Route path={"/mypage"} element={<Mypage />} />
-        <Route path={"/login"} element={<Login />} />
-        <Route path={"/regist"} element={<Regist />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/todo-FE" element={<Main />} />
+        <Route path="/mypage" element={<Mypage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/regist" element={<Regist />} />
       </Routes>
     </div>
   );
