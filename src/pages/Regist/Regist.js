@@ -5,28 +5,30 @@ import "./regist.scss";
 import Header from "components/header/Header";
 import GoogleLogin from "components/snsLogin/GoogleLogin";
 import KakaoLogin from "components/snsLogin/KaKaoLogin";
+import { ROOT_API } from "constants/api";
 
 const Login = () => {
   const onSubmit = async (data) => {
     await new Promise((r) => setTimeout(r, 1000));
 
-    // axios
-    //   .post(`https://url`, {
-    //     modelName: data["modelName"],
-    //     brand: data["brand"],
-    //     price: data["price"],
-    //     // size: data["size"],
-    //   })
-    //   .then(function (response) {
-    //     // console.log("dta", response.data);
-    //     alert("회원가입 완료");
-    //   })
-    //   .catch(function (error) {
-    //     // 오류발생시 실행
-    //   })
-    //   .then(function () {
-    //     // 항상 실행
-    //   });
+    axios
+      .post(
+        `${ROOT_API}/join`,
+        {
+          email: data.email,
+          password: data.userNickname,
+          name: data.userId,
+          image: data.password,
+        }
+        // {
+        //   headers: {
+        //     API_HEADER,
+        //   },
+        // }
+      )
+      .then(function (response) {
+        console.log("dta", response.data);
+      });
     console.log("data", data);
   };
 
@@ -43,12 +45,27 @@ const Login = () => {
       <div className="content">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrap">
+            <label htmlFor="email">이메일</label>
+            <input
+              id="email"
+              type="text"
+              placeholder="아이디를 입력해주세요"
+              {...register("email", {
+                required: "이메일은 필수 입력입니다.",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "이메일 형식에 맞지 않습니다.",
+                },
+              })}
+            />
+            {errors.email && <small role="alert">{errors.email.message}</small>}
+          </div>
+          <div className="input-wrap">
             <label htmlFor="id">아이디</label>
             <input
               id="id"
               type="text"
               placeholder="아이디를 입력해주세요"
-              aria-invalid={!isDirty ? undefined : errors.id ? "true" : "false"}
               {...register("id", {
                 required: "아이디는 필수 입력입니다.",
                 minLength: {
@@ -65,14 +82,11 @@ const Login = () => {
               id="password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              aria-invalid={
-                !isDirty ? undefined : errors.password ? "true" : "false"
-              }
               {...register("password", {
                 required: "비밀번호는 필수 입력입니다.",
                 minLength: {
-                  value: 8,
-                  message: "8자리 이상 비밀번호를 사용해주세요.",
+                  value: 4,
+                  message: "4자리 이상 비밀번호를 사용해주세요.",
                 },
               })}
             />

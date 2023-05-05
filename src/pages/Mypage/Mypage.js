@@ -18,7 +18,7 @@ const Mypage = () => {
     setTab(type);
   };
 
-  const auth = true;
+  const auth = false;
 
   // useEffect(() => {
   //   if (!auth) {
