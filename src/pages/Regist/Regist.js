@@ -5,7 +5,7 @@ import "./regist.scss";
 import Header from "components/header/Header";
 import GoogleLogin from "components/snsLogin/GoogleLogin";
 import KakaoLogin from "components/snsLogin/KaKaoLogin";
-import { ROOT_API } from "constants/api";
+import { ROOT_API, API_HEADER } from "constants/api";
 
 const Login = () => {
   const onSubmit = async (data) => {
@@ -16,20 +16,23 @@ const Login = () => {
         `${ROOT_API}/join`,
         {
           email: data.email,
-          password: data.userNickname,
-          name: data.userId,
+          password: data.password,
+          name: data.name,
           image: data.password,
+        },
+        {
+          headers: {
+            API_HEADER,
+          },
         }
-        // {
-        //   headers: {
-        //     API_HEADER,
-        //   },
-        // }
       )
       .then(function (response) {
         console.log("dta", response.data);
+      })
+      .catch(function (error) {
+        console.log("회원가입 실패:", error.response.data);
       });
-    console.log("data", data);
+    console.log("formdata", data);
   };
 
   const {
@@ -61,20 +64,20 @@ const Login = () => {
             {errors.email && <small role="alert">{errors.email.message}</small>}
           </div>
           <div className="input-wrap">
-            <label htmlFor="id">아이디</label>
+            <label htmlFor="name">이름</label>
             <input
-              id="id"
+              id="name"
               type="text"
-              placeholder="아이디를 입력해주세요"
-              {...register("id", {
-                required: "아이디는 필수 입력입니다.",
+              placeholder="이름을 입력해주세요"
+              {...register("name", {
+                required: "이름은 필수 입력입니다.",
                 minLength: {
                   value: 4,
                   message: "4글자 이상 입력해주세요.",
                 },
               })}
             />
-            {errors.id && <small role="alert">{errors.id.message}</small>}
+            {errors.name && <small role="alert">{errors.name.message}</small>}
           </div>
           <div className="input-wrap">
             <label htmlFor="password">비밀번호</label>
