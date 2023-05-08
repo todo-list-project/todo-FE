@@ -8,23 +8,21 @@ import './assets/style/index.scss';
 import reportWebVitals from './reportWebVitals';
 
 const queryClient = new QueryClient({
-  onError: (error, query) => {
-    console.log('onError', error);
-  },
-  onSuccess: (data) => {
-    console.log('data:', data);
-  },
+    onError: (error, query) => {
+        console.log('onError', error);
+    },
+    onSuccess: (data) => {
+        console.log('data:', data);
+    },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <HashRouter basename={'/'}>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+            <App />
+        </QueryClientProvider>
     </HashRouter>
-  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

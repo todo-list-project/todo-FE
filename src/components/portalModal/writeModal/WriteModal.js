@@ -5,26 +5,30 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './writemodal.scss';
 import DatePicker from '../../datepicker/DatePicker';
 import FormatDate from '../../../util/FormatDate';
+import { useQuery } from 'react-query';
+// import TodoService from '../../../service/fetchTodo';
 
 const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
     const [value, setValue] = useState(initialValue);
-    const [title, setTitle] = useState();
+    const [title, setTitle] = useState('');
     const [isChecked, setIsChecked] = useState(false); //친구에게만 보이기
     const [startDate, setStartDate] = useState(new Date('2023-04-23')); //시작 날짜
     const [endDate, setEndDate] = useState(new Date('2023-05-01')); //끝 날짜
+    const [data, setData] = useState();
+
     let startNewDate = ''; //변환 한 시작날짜
     let endNewDate = ''; //변환한 마지막날짜
+    // console.log(data);
+    const changeTitle = (e) => {
+        setTitle(e.target.value);
+    };
+
+    const changeValue = (e) => {
+        setValue(e.target.value);
+    };
 
     const handleCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
-    };
-
-    const handleSave = async () => {
-        onSave(value);
-    };
-
-    const handleCancel = () => {
-        onCancel();
     };
 
     useMemo(() => {
@@ -34,17 +38,35 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
         // console.log('새로운 끝날짜', endNewDate);
     }, [startDate, endDate]);
 
+    useEffect(() => {
+        setData({
+            title: title,
+            isChecked: isChecked,
+            startDate: startNewDate,
+            endDate: endNewDate,
+        });
+    }, [title, isChecked, startNewDate, endNewDate]);
+
+    //서버로 문의글 전송
+    const handleSave = async () => {
+        const { Todowrite, isLoading } = useQuery(getWriteTodo, TodoService);
+    };
+    //취소
+    const handleCancel = () => {
+        onCancel();
+    };
+
     return (
         <Modal open={visible} onCancel={handleCancel} footer={null}>
             <Input
                 style={{ marginBottom: '30px' }}
                 placeholder="title"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={changeTitle}
             />
             <Input.TextArea
                 value={value}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={changeValue}
                 placeholder="Write something"
                 autoSize={{ minRows: 4, maxRows: 5 }}
             />

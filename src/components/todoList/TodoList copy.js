@@ -6,15 +6,23 @@ import './todo.scss';
 const TodoList = () => {
     const [item, setItem] = useState([]);
     const [loading, setLoading] = useState(false);
-    const pageRef = useRef(1);
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const page = useRef(1);
     const targetRef = useRef(null);
 
     const fetchTodo = useCallback(async () => {
-        const response = await axios.get(
-            `https://jsonplaceholder.typicode.com/todos?_limit=16&_page=${pageRef.current}}`
-        );
-        console.log('첫 렌더링');
-        return response.data;
+        try {
+            const { data } = await axios.get(
+                `https://jsonplaceholder.typicode.com/todos?_limit=10&_page=${page.current}}`
+            );
+            setItem((prevItem) => [...prevItem, ...data]);
+            setHasNextPage(data.length === 10);
+            if (data.length) {
+                pageRef.current;
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }, []);
 
     // NOTE: 추후 intersection observer 를 쓰기 위하여 목록과 아이템 분리
@@ -23,13 +31,14 @@ const TodoList = () => {
     */
     useEffect(() => {
         setLoading(true);
+
         fetchTodo(pageRef.current).then((data) => {
-            console.log('렌더링');
-            console.log(pageRef.current, data);
+            console.log(1, pageRef.current);
+            console.log(1, data);
             setLoading(false);
             setItem((prevItems) => [...prevItems, ...data]);
         });
-    }, [fetchTodo]);
+    }, []);
 
     const handleIntersection = useCallback(
         (entries) => {
@@ -39,6 +48,8 @@ const TodoList = () => {
             if (target.isIntersecting) {
                 pageRef.current++;
                 fetchTodo(pageRef.current).then((data) => {
+                    console.log(2, pageRef.current);
+                    console.log(2, data);
                     setItem((prevItem) => [...prevItem, ...data]);
                 });
             }
@@ -46,19 +57,21 @@ const TodoList = () => {
         [fetchTodo]
     );
 
-    function handleObserve() {
-        const observer = new IntersectionObserver(handleIntersection);
-        console.log('관찰', observer);
-        if (targetRef.current) {
-            observer.observe(targetRef.current);
-        }
-        return () => observer && observer.disconnect();
-    }
-    useEffect(() => {}, [handleIntersection]);
-
     useEffect(() => {
-        handleObserve();
-    }, []);
+        setTimeout(() => {
+            let options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3,
+            };
+            const observer = new IntersectionObserver(handleIntersection, options);
+            console.log('observer', observer);
+            if (targetRef.current) {
+                observer.observe(targetRef.current);
+            }
+            return () => observer && observer.disconnect();
+        }, 200);
+    }, [handleIntersection]);
 
     // NOTE: 추후 intersection observer 를 쓰기 위하여 목록과 아이템 분리
     return (
@@ -68,11 +81,8 @@ const TodoList = () => {
                     return <TodoItem element={element} key={idx} />;
                 })}
             </div>
-            {loading && <div>Loading.....</div>}
-            <div
-                style={{ width: '100%', height: 50, backgroundColor: '#000' }}
-                ref={targetRef}
-            ></div>
+            {loading && <div className="LoadingTodoList">Loading.....</div>}
+            <div style={{ width: '100%' }} ref={targetRef}></div>
         </div>
     );
 };
