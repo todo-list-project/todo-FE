@@ -18,7 +18,7 @@ const Login = () => {
           email: data.email,
           password: data.password,
           name: data.name,
-          image: data.password,
+          image: '111',
         },
         {
           headers: {
