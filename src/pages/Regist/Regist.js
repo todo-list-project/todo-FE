@@ -27,10 +27,10 @@ const Login = () => {
         }
       )
       .then(function (response) {
-        console.log("dta", response.data);
+        console.log("dta", response);
       })
       .catch(function (error) {
-        console.log("회원가입 실패:", error.response.data);
+        console.log("회원가입 실패:", error.response);
       });
     console.log("formdata", data);
   };
