@@ -3,29 +3,36 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "./regist.scss";
 import Header from "components/header/Header";
+import GoogleLogin from "components/snsLogin/GoogleLogin";
+import KakaoLogin from "components/snsLogin/KaKaoLogin";
+import { ROOT_API, API_HEADER } from "constants/api";
 
 const Login = () => {
   const onSubmit = async (data) => {
     await new Promise((r) => setTimeout(r, 1000));
 
-    // axios
-    //   .post(`https://url`, {
-    //     modelName: data["modelName"],
-    //     brand: data["brand"],
-    //     price: data["price"],
-    //     // size: data["size"],
-    //   })
-    //   .then(function (response) {
-    //     // console.log("dta", response.data);
-    //     alert("회원가입 완료");
-    //   })
-    //   .catch(function (error) {
-    //     // 오류발생시 실행
-    //   })
-    //   .then(function () {
-    //     // 항상 실행
-    //   });
-    console.log("data", data);
+    axios
+      .post(
+        `${ROOT_API}/join`,
+        {
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          image: '111',
+        },
+        {
+          headers: {
+            API_HEADER,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log("dta", response);
+      })
+      .catch(function (error) {
+        console.log("회원가입 실패:", error.response);
+      });
+    console.log("formdata", data);
   };
 
   const {
@@ -36,26 +43,41 @@ const Login = () => {
   } = useForm({ mode: "onChange" });
 
   return (
-    <div className="page login-page">
+    <div className="page regist-page">
       <Header />
       <div className="content">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrap">
-            <label htmlFor="id">아이디</label>
+            <label htmlFor="email">이메일</label>
             <input
-              id="id"
+              id="email"
               type="text"
               placeholder="아이디를 입력해주세요"
-              aria-invalid={!isDirty ? undefined : errors.id ? "true" : "false"}
-              {...register("id", {
-                required: "아이디는 필수 입력입니다.",
+              {...register("email", {
+                required: "이메일은 필수 입력입니다.",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "이메일 형식에 맞지 않습니다.",
+                },
+              })}
+            />
+            {errors.email && <small role="alert">{errors.email.message}</small>}
+          </div>
+          <div className="input-wrap">
+            <label htmlFor="name">이름</label>
+            <input
+              id="name"
+              type="text"
+              placeholder="이름을 입력해주세요"
+              {...register("name", {
+                required: "이름은 필수 입력입니다.",
                 minLength: {
                   value: 4,
                   message: "4글자 이상 입력해주세요.",
                 },
               })}
             />
-            {errors.id && <small role="alert">{errors.id.message}</small>}
+            {errors.name && <small role="alert">{errors.name.message}</small>}
           </div>
           <div className="input-wrap">
             <label htmlFor="password">비밀번호</label>
@@ -63,14 +85,11 @@ const Login = () => {
               id="password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              aria-invalid={
-                !isDirty ? undefined : errors.password ? "true" : "false"
-              }
               {...register("password", {
                 required: "비밀번호는 필수 입력입니다.",
                 minLength: {
-                  value: 8,
-                  message: "8자리 이상 비밀번호를 사용해주세요.",
+                  value: 4,
+                  message: "4자리 이상 비밀번호를 사용해주세요.",
                 },
               })}
             />
@@ -88,6 +107,10 @@ const Login = () => {
             </button>
           </div>
         </form>
+        <div className="social-login">
+          <GoogleLogin />
+          <KakaoLogin />
+        </div>
       </div>
     </div>
   );

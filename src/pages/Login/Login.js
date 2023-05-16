@@ -3,29 +3,32 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import "./login.scss";
 import Header from "components/header/Header";
+import { ROOT_API, API_HEADER } from "constants/api";
 
 const Login = () => {
   const onSubmit = async (data) => {
     await new Promise((r) => setTimeout(r, 1000));
 
-    // axios
-    //   .post(`https://url`, {
-    //     modelName: data["modelName"],
-    //     brand: data["brand"],
-    //     price: data["price"],
-    //     // size: data["size"],
-    //   })
-    //   .then(function (response) {
-    //     // console.log("dta", response.data);
-    //     alert("회원가입 완료");
-    //   })
-    //   .catch(function (error) {
-    //     // 오류발생시 실행
-    //   })
-    //   .then(function () {
-    //     // 항상 실행
-    //   });
-    console.log("data", data);
+    axios
+      .post(
+        `${ROOT_API}/login`,
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          headers: {
+            API_HEADER,
+          },
+        }
+      )
+      .then(function (response) {
+        console.log("dta", response);
+      })
+      .catch(function (error) {
+        console.log("로그인 실패:", error.response);
+      });
+    console.log("formdata", data);
   };
 
   const {
@@ -41,21 +44,20 @@ const Login = () => {
       <div className="content">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrap">
-            <label htmlFor="id">아이디</label>
+            <label htmlFor="eamil">이메일</label>
             <input
-              id="id"
+              id="email"
               type="text"
-              placeholder="아이디를 입력해주세요"
-              aria-invalid={!isDirty ? undefined : errors.id ? "true" : "false"}
-              {...register("id", {
-                required: "아이디는 필수 입력입니다.",
-                minLength: {
-                  value: 4,
-                  message: "4글자 이상 입력해주세요.",
+              placeholder="이메일을 입력해주세요"
+              {...register("email", {
+                required: "이메일은 필수 입력입니다.",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "이메일 형식에 맞지 않습니다.",
                 },
               })}
             />
-            {errors.id && <small role="alert">{errors.id.message}</small>}
+            {errors.eamil && <small role="alert">{errors.eamil.message}</small>}
           </div>
           <div className="input-wrap">
             <label htmlFor="password">비밀번호</label>
@@ -69,8 +71,8 @@ const Login = () => {
               {...register("password", {
                 required: "비밀번호는 필수 입력입니다.",
                 minLength: {
-                  value: 8,
-                  message: "8자리 이상 비밀번호를 사용해주세요.",
+                  value: 4,
+                  message: "4자리 이상 비밀번호를 사용해주세요.",
                 },
               })}
             />
@@ -94,7 +96,9 @@ const Login = () => {
             <div className="divider"></div>
             <button className="noline-button">비밀번호 찾기</button>
           </div>
-          <button className="default-button line-button submit-button">회원가입</button>
+          <button className="default-button line-button submit-button">
+            회원가입
+          </button>
         </div>
       </div>
     </div>

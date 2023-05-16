@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import { faUser, faHouse } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { AiOutlineUser, AiOutlineHome } from "react-icons/ai";
 import "./header.scss";
 
 const Header = () => {
@@ -11,7 +10,7 @@ const Header = () => {
         {/* NOTE: 검색창 상시검색을 하게 할지 논의 필요, 상시검색 안해도된다면 이름, 로고등이 들어가도 될듯 */}
         <div className="home">
           <Link to="/">
-            <FontAwesomeIcon icon={faHouse} />
+            <AiOutlineHome size="27" />
           </Link>
         </div>
         <div>검색창? </div>
@@ -22,7 +21,7 @@ const Header = () => {
           }
           <div className="mypage">
             <Link to="/mypage">
-              <FontAwesomeIcon icon={faUser} />
+              <AiOutlineUser size="27"/>
             </Link>
           </div>
         </div>

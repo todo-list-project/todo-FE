@@ -1,28 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { HashRouter } from 'react-router-dom';
-import App from './App';
-import './assets/style/index.scss';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { HashRouter, unstable_HistoryRouter as Router } from "react-router-dom";
+import App from "./App";
+import history from "./hooks/useHistory";
+import "./assets/style/index.scss";
 
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from "./reportWebVitals";
 
 const queryClient = new QueryClient({
-    onError: (error, query) => {
-        console.log('onError', error);
-    },
-    onSuccess: (data) => {
-        console.log('data:', data);
-    },
+  onError: (error, query) => {
+    console.log("onError", error);
+  },
+  onSuccess: (data) => {
+    console.log("data:", data);
+  },
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <HashRouter basename={'/'}>
-        <QueryClientProvider client={queryClient}>
-            <App />
-        </QueryClientProvider>
-    </HashRouter>
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <Router history={history}>
+        <App />
+      </Router>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

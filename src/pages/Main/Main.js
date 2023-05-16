@@ -7,6 +7,7 @@ import TodoList from 'components/todoList/TodoList';
 import WriteModal from 'components/portalModal/writeModal/WriteModal';
 import ControllerBox from 'layout/controllerBox/ControllerBox';
 import { useEffect, useState } from 'react';
+import TopButton from 'components/topButton/TopButton';
 
 const Main = () => {
   const [onModal, setOnModal] = useState(false);
@@ -48,6 +49,7 @@ const Main = () => {
         onSave={handleModalSave}
       />
       {onModal && <TodoModal setOnModal={() => setOnModal()} />}
+      <TopButton/>
     </div>
   );
 };
