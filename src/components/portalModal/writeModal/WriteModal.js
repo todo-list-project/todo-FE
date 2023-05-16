@@ -48,9 +48,9 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
     }, [title, isChecked, startNewDate, endNewDate]);
 
     //서버로 문의글 전송
-    const handleSave = async () => {
-        const { Todowrite, isLoading } = useQuery(getWriteTodo, TodoService);
-    };
+    // const handleSave = async () => {
+    //     const { Todowrite, isLoading } = useQuery(getWriteTodo, TodoService);
+    // };
     //취소
     const handleCancel = () => {
         onCancel();
@@ -84,7 +84,9 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
                     <Button onClick={handleCancel} style={{ marginRight: '0.5rem' }}>
                         취소
                     </Button>
-                    <Button type="primary" onClick={handleSave}>
+                    <Button type="primary" 
+                    // onClick={handleSave}
+                    >
                         저장
                     </Button>
                 </ConfigProvider>

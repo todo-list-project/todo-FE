@@ -1,11 +1,19 @@
 import axios from "axios";
-import React from "react";
-import { useForm } from "react-hook-form";
-import "./login.scss";
 import Header from "components/header/Header";
-import { ROOT_API, API_HEADER } from "constants/api";
+import { API_HEADER, ROOT_API } from "constants/api";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { SET_TOKEN } from "store/Auth";
+import "./login.scss";
+import BasicModal from "components/portalModal/basicmodal/BasicModal";
 
 const Login = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [modal, setModal] = useState(false);
+
   const onSubmit = async (data) => {
     await new Promise((r) => setTimeout(r, 1000));
 
@@ -24,6 +32,9 @@ const Login = () => {
       )
       .then(function (response) {
         console.log("dta", response);
+        dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
+        setModal(true);
+        reset();
       })
       .catch(function (error) {
         console.log("로그인 실패:", error.response);
@@ -40,6 +51,16 @@ const Login = () => {
 
   return (
     <div className="page login-page">
+      {modal && (
+        <BasicModal
+          setOnModal={() => setModal(false)}
+          dimClick={() => navigate("/")}
+        >
+          로그인이 완료되었습니다. <br />
+          확인을 누르시면 메인으로 이동합니다.
+          <button onClick={() => navigate("/")}>확인</button>
+        </BasicModal>
+      )}
       <Header />
       <div className="content">
         <form onSubmit={handleSubmit(onSubmit)}>

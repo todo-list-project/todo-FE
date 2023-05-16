@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { HashRouter, unstable_HistoryRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
+import { unstable_HistoryRouter as Router } from "react-router-dom";
 import App from "./App";
-import history from "./hooks/useHistory";
 import "./assets/style/index.scss";
-
+import history from "./hooks/useHistory";
 import reportWebVitals from "./reportWebVitals";
+import store from "./store";
 
 const queryClient = new QueryClient({
   onError: (error, query) => {
@@ -20,11 +21,13 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </QueryClientProvider>
+    </Provider>
   </React.StrictMode>
 );
 

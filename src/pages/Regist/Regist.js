@@ -1,13 +1,21 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import BasicModal from "components/portalModal/basicmodal/BasicModal";
 import "./regist.scss";
 import Header from "components/header/Header";
 import GoogleLogin from "components/snsLogin/GoogleLogin";
 import KakaoLogin from "components/snsLogin/KaKaoLogin";
+import { useNavigate } from "react-router-dom";
 import { ROOT_API, API_HEADER } from "constants/api";
+import { SET_TOKEN } from "store/Auth";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  let navigate = useNavigate();
+  const [modal, setModal] = useState(false);
+
   const onSubmit = async (data) => {
     await new Promise((r) => setTimeout(r, 1000));
 
@@ -18,7 +26,7 @@ const Login = () => {
           email: data.email,
           password: data.password,
           name: data.name,
-          image: '111',
+          image: "111",
         },
         {
           headers: {
@@ -26,10 +34,13 @@ const Login = () => {
           },
         }
       )
-      .then(function (response) {
+      .then((response) => {
         console.log("dta", response);
+        dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
+        setModal(true);
+        reset();
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log("회원가입 실패:", error.response);
       });
     console.log("formdata", data);
@@ -45,6 +56,13 @@ const Login = () => {
   return (
     <div className="page regist-page">
       <Header />
+      {modal && (
+        <BasicModal setOnModal={() => setModal()}>
+          회원가입이 완료되었습니다. <br />
+          확인을 누르시면 메인으로 이동합니다.
+          <button onClick={() => navigate("/")}>확인</button>
+        </BasicModal>
+      )}
       <div className="content">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrap">
