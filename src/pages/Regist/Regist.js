@@ -35,15 +35,10 @@ const Login = () => {
         }
       )
       .then((response) => {
-        console.log("dta", response);
         dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
         setModal(true);
         reset();
-      })
-      .catch((error) => {
-        console.log("회원가입 실패:", error.response);
       });
-    console.log("formdata", data);
   };
 
   const {

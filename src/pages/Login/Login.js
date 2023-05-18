@@ -30,16 +30,11 @@ const Login = () => {
           },
         }
       )
-      .then(function (response) {
-        console.log("dta", response);
+      .then(response => {
         dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
         setModal(true);
         reset();
       })
-      .catch(function (error) {
-        console.log("로그인 실패:", error.response);
-      });
-    console.log("formdata", data);
   };
 
   const {
