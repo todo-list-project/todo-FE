@@ -28,14 +28,15 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
     };
 
     const handleCheckboxChange = (e) => {
+        console.log(e);
         setIsChecked(e.target.checked);
     };
 
-    useMemo(() => {
+    useEffect(() => {
         startNewDate = FormatDate(startDate);
-        // console.log('새로운 시작날짜', startNewDate);
+        console.log('새로운 시작날짜', startNewDate);
         endNewDate = FormatDate(endDate);
-        // console.log('새로운 끝날짜', endNewDate);
+        console.log('새로운 끝날짜', endNewDate);
     }, [startDate, endDate]);
 
     useEffect(() => {
