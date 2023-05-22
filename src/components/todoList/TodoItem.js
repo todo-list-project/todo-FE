@@ -1,8 +1,6 @@
 import TodoModal from 'components/portalModal/todomodal/TodoModal';
 import React, { useState } from 'react';
 import './todo.scss';
-import { useDispatch } from 'react-redux';
-import { openModal } from '../../store/modalSlice';
 
 const TodoItem = (props) => {
     // console.log('todoItem', props);

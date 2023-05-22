@@ -6,16 +6,15 @@ import { changeInfiniteScrollDataToArray } from 'util/changeInfiniteScrollDataTo
 import useIntesectionObserver from 'hook/useIntesectionObserver';
 
 const TodoList = () => {
-    //api 호출시 pageParam을 반환하지 않아 다음페이지가 나오지 않음
     const { data, fetchNextPage, hasNextPage } = useDummyData();
-    // console.log('data', data);
-    // console.log(hasNextPage);
+
     const todoData = changeInfiniteScrollDataToArray(data);
-    // console.log('todoData', todoData);
+
     const onIntersection = useCallback(
         (entries) => {
-            console.log('entries', entries);
+            // console.log('entries', entries);
             const [target] = entries;
+
             if (target.isIntersecting && hasNextPage) {
                 fetchNextPage();
             }
@@ -37,7 +36,14 @@ const TodoList = () => {
                     return <TodoItem element={element} key={idx} />;
                 })}
             </div>
-            {hasNextPage && <div ref={(elem) => setTarget(elem)}>로딩중...</div>}
+            {hasNextPage && (
+                <div
+                    ref={(elem) => setTarget(elem)}
+                    style={{ width: '100px', height: '50px', backgroundColor: '#ccc' }}
+                >
+                    로딩중...
+                </div>
+            )}
         </div>
     );
 };

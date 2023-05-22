@@ -8,7 +8,6 @@ import WriteModal from 'components/portalModal/writeModal/WriteModal';
 import ControllerBox from 'layout/controllerBox/ControllerBox';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { openModal, closeModal } from '../../store/modalSlice';
 import TopButton from 'components/topButton/TopButton';
 
 const Main = () => {
@@ -42,7 +41,7 @@ const Main = () => {
                         할일 추가
                     </Button>
                 </ControllerBox>
-                <TodoList todoData={todoData} />
+                <TodoList />
             </div>
             <WriteModal visible={visible} onCancel={handleModalCancel} onSave={handleModalSave} />
             {onModal && <TodoModal setOnModal={() => setOnModal()} />}
