@@ -112,7 +112,7 @@ const Login = () => {
             <div className="divider"></div>
             <button className="noline-button">비밀번호 찾기</button>
           </div>
-          <button className="default-button line-button submit-button">
+          <button className="default-button line-button submit-button" onClick={() => navigate('/regist')}>
             회원가입
           </button>
         </div>
