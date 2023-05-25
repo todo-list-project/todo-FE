@@ -1,34 +1,50 @@
 @import 'assets/style/function.scss';
 
 .info-modal-write {
-  width: 400px;
-  height: fit-content;
-  padding: 20px 24px 30px 24px;
-  border-radius: 12px;
-  @include media-mo {
-    width: 100%;
-  }
-  .title {
-    padding: 16px 0;
-    font-size: 20px;
-    text-align: center;
-  }
+    width: 400px;
+    height: fit-content;
+    padding: 20px 24px 30px 24px;
+    border-radius: 12px;
+    @include media-mo {
+        width: 100%;
+    }
+    .title {
+        padding: 16px 0;
+        font-size: 20px;
+        text-align: center;
+    }
+}
+.writeModalBottom {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
 }
 
 .calenderWrap {
-  width: 340px;
-  height: 300px;
-  position: absolute;
-  z-index: 99999;
-  left: 3.1%;
-  top: 93%;
-  transition: all 0.3 ease-in-out;
+    width: 340px;
+    height: 300px;
+    position: absolute;
+    z-index: 99999;
+    left: 3.1%;
+    top: 93%;
+    transition: all 0.3 ease-in-out;
 }
-.ant-picker-calendar-header {
-  justify-content: flex-start !important;
-  padding: 10px 8px !important;
+
+.ant-picker-header {
+    align-items: center;
 }
 
 .ant-picker-calendar-date-content {
-  height: 20px !important;
+    height: 20px !important;
+}
+
+.ant-picker-header-view {
+    display: flex;
+}
+
+.anticon {
+    vertical-align: 1rem !important;
+}
+.ant-modal-close-x{
+    display: none !important;
 }

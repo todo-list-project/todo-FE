@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useInfiniteQuery } from 'react-query';
 
 const infinityQueryService = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'http://localhost:4000',
 });
 
 export function useDummyData() {

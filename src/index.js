@@ -7,6 +7,7 @@ import { HashRouter } from 'react-router-dom';
 import App from './App';
 import './assets/style/index.scss';
 import history from './hooks/useHistory';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 import store from './store';
 const queryClient = new QueryClient({
@@ -23,6 +24,7 @@ root.render(
     <Provider store={store}>
         <HashRouter basename={'/'}>
             <QueryClientProvider client={queryClient}>
+                <ReactQueryDevtools initialIsOpen={true} />
                 <App />
             </QueryClientProvider>
         </HashRouter>
