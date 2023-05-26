@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
-import { unstable_HistoryRouter as Router } from 'react-router-dom';
 import { HashRouter } from 'react-router-dom';
 import App from './App';
 import './assets/style/index.scss';
-import history from './hooks/useHistory';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import store from './store';
 const queryClient = new QueryClient({
@@ -24,9 +22,9 @@ root.render(
     <Provider store={store}>
         <HashRouter basename={'/'}>
             <QueryClientProvider client={queryClient}>
-                <ReactQueryDevtools initialIsOpen={true} />
+                <ReactQueryDevtools initialIsOpen={false} />
                 <App />
             </QueryClientProvider>
         </HashRouter>
-    </Provider>
+    </Provider>,
 );

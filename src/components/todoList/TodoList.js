@@ -19,7 +19,7 @@ const TodoList = () => {
                 fetchNextPage();
             }
         },
-        [hasNextPage, fetchNextPage]
+        [hasNextPage, fetchNextPage],
     );
 
     const { setTarget } = useIntesectionObserver({
@@ -39,7 +39,11 @@ const TodoList = () => {
             {hasNextPage && (
                 <div
                     ref={(elem) => setTarget(elem)}
-                    style={{ width: '100px', height: '50px', backgroundColor: '#ccc' }}
+                    style={{
+                        width: '100px',
+                        height: '50px',
+                        backgroundColor: '#ccc',
+                    }}
                 >
                     로딩중...
                 </div>

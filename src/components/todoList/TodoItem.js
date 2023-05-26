@@ -14,11 +14,17 @@ const TodoItem = (props) => {
 
     return (
         <>
-            <div onClick={() => setOnModal(true)} className="todo-item" ref={props.ref}>
+            <div
+                onClick={() => setOnModal(true)}
+                className="todo-item"
+                ref={props.ref}
+            >
                 {props.element.title}
                 <div>{props.element.id}</div>
             </div>
-            {onModal && <TodoModal todoItem={props} setOnModal={() => setOnModal()} />}
+            {onModal && (
+                <TodoModal todoItem={props} setOnModal={() => setOnModal()} />
+            )}
         </>
     );
 };

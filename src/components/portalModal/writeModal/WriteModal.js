@@ -4,6 +4,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './writemodal.scss';
 import { DatePicker } from 'antd';
 import FormatDate from '../../../util/FormatDate';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
     const { RangePicker } = DatePicker;
@@ -19,7 +21,8 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
 
     // console.log('value1', startNewDate);
     // console.log('value2', endNewDate);
-    // console.log(data);
+    console.log('dates', dates);
+    console.log('value', value);
     const changeTitle = (e) => {
         setTitle(e.target.value);
     };
@@ -29,11 +32,21 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
     };
 
     const handleCheckboxChange = (e) => {
-        console.log(e);
         setIsChecked(e.target.checked);
     };
 
     useEffect(() => {
+        if (value) {
+            const startDate = FormatDate(value[0].$d);
+            const endDate = FormatDate(value[1].$d);
+            setStartNewDate(startDate);
+            setEndNewDate(endDate);
+        }
+    }, [value]);
+
+    useEffect(() => {
+        console.log('startNewDate', startNewDate);
+        console.log('endNewDate', endNewDate);
         setData({
             title: title,
             description: contents,
@@ -44,23 +57,34 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
     }, [title, isChecked, startNewDate, endNewDate]);
 
     //서버로 문의글 전송
-    // const handleSave = async () => {
-    //     const { Todowrite, isLoading } = useQuery(getWriteTodo, TodoService);
-    // };
+    const writeTodo = async () => {
+        try {
+            const response = await axios.post('http://localhost:4000/todos', {
+                title: title,
+                description: contents,
+                shared: isChecked,
+                startDate: startNewDate,
+                endDate: endNewDate,
+            });
+            console.log(response);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const mutation = useMutation(writeTodo);
+    //전송
+    const handleSave = async () => {
+        console.log('mutation', mutation);
+        mutation.mutate();
+    };
+
     //취소
     const handleCancel = () => {
         onCancel();
     };
-    // rangpicker
 
-    useEffect(() => {
-        if (value) {
-            const startDate = FormatDate(value[0].$d);
-            const endDate = FormatDate(value[1].$d);
-            setStartNewDate(startDate);
-            setEndNewDate(endDate);
-        }
-    }, [value]);
+    // rangpicker
     const disabledDate = (current) => {
         if (!dates) {
             return false;
@@ -108,6 +132,7 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
                     onOpenChange={onOpenChange}
                     changeOnBlur
                 />
+
                 <div>
                     <ConfigProvider
                         theme={{
@@ -116,13 +141,13 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
                             },
                         }}
                     >
-                        <Button onClick={handleCancel} style={{ marginRight: '0.5rem' }}>
+                        <Button
+                            onClick={handleCancel}
+                            style={{ marginRight: '0.5rem' }}
+                        >
                             취소
                         </Button>
-                        <Button
-                            type="primary"
-                            // onClick={handleSave}
-                        >
+                        <Button type="primary" onClick={handleSave}>
                             저장
                         </Button>
                     </ConfigProvider>
