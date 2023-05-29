@@ -7,15 +7,12 @@ import TodoList from 'components/todoList/TodoList';
 import WriteModal from 'components/portalModal/writeModal/WriteModal';
 import ControllerBox from 'layout/controllerBox/ControllerBox';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import TopButton from 'components/topButton/TopButton';
 
 const Main = () => {
     const [onModal, setOnModal] = useState(false);
     const [visible, setVisible] = useState(false);
     const [todoData, setTodoData] = useState('');
-
-    const dispatch = useDispatch();
 
     // console.log('할일추가 ', todoData);
     const handleModalCancel = () => {
@@ -43,6 +40,7 @@ const Main = () => {
                 </ControllerBox>
                 <TodoList />
             </div>
+            <TopButton />
             <WriteModal visible={visible} onCancel={handleModalCancel} onSave={handleModalSave} />
             {onModal && <TodoModal setOnModal={() => setOnModal()} />}
         </div>
