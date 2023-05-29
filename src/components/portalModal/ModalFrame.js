@@ -1,9 +1,9 @@
 // ModalFrame.tsx
 
-import React from 'react';
-import PortalModal from './PortalModal';
-import classnames from 'classnames';
-import './portalmodal.scss';
+import React from "react";
+import PortalModal from "./PortalModal";
+import classnames from "classnames";
+import "./portalmodal.scss";
 
 const ModalFrame = ({
   children,
@@ -12,11 +12,12 @@ const ModalFrame = ({
   classname,
   isDim,
   zindex,
+  dimClick,
 }) => {
   return (
     <PortalModal>
-      <div className={classnames('modal')} style={{ zIndex: zindex }}>
-        <div className={classnames('', classname)}>
+      <div className={classnames("modal")} style={{ zIndex: zindex }}>
+        <div className={classnames("", classname)}>
           <div className="">
             {children}
 
@@ -27,7 +28,12 @@ const ModalFrame = ({
             )}
           </div>
         </div>
-        {isDim && <div className="dim" onClick={() => setOnModal(false)}></div>}
+        {isDim && (
+          <div
+            className="dim"
+            onClick={() => (!dimClick ? setOnModal(false) : dimClick())}
+          ></div>
+        )}
       </div>
     </PortalModal>
   );

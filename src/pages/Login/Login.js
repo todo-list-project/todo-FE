@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SET_TOKEN } from "store/Auth";
+import { setRefreshToken } from "store/Cookie";
 import "./login.scss";
 import BasicModal from "components/portalModal/basicmodal/BasicModal";
 
@@ -30,11 +31,13 @@ const Login = () => {
           },
         }
       )
-      .then(response => {
-        dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
+      .then((response) => {
+        console.log("rr", response);
+        setRefreshToken({ refreshToken: response.data[0].token });
+        dispatch(SET_TOKEN({ accessToken: response.data[1].token }));
         setModal(true);
         reset();
-      })
+      });
   };
 
   const {
@@ -56,7 +59,6 @@ const Login = () => {
           <button onClick={() => navigate("/")}>확인</button>
         </BasicModal>
       )}
-      <Header />
       <div className="content">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-wrap">
@@ -110,9 +112,17 @@ const Login = () => {
           <div className="search-regist">
             <button className="noline-button">계정 찾기</button>
             <div className="divider"></div>
-            <button className="noline-button">비밀번호 찾기</button>
+            <button
+              className="noline-button"
+              onClick={() => navigate("/findpw")}
+            >
+              비밀번호 찾기
+            </button>
           </div>
-          <button className="default-button line-button submit-button" onClick={() => navigate('/regist')}>
+          <button
+            className="default-button line-button submit-button"
+            onClick={() => navigate("/regist")}
+          >
             회원가입
           </button>
         </div>

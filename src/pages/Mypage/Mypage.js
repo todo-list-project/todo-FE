@@ -1,15 +1,19 @@
+import axios from "axios";
+import classnames from "classnames";
 import Button from "components/button/Button";
 import Header from "components/header/Header";
-import { useState, useEffect } from "react";
-import classnames from "classnames";
-import { Link, useNavigate } from "react-router-dom";
-import { AiFillFolderAdd } from "react-icons/ai";
-import "./mypage.scss";
-import { useDispatch, useSelector } from "react-redux";
 import BasicModal from "components/portalModal/basicmodal/BasicModal";
-import axios from "axios";
-import { ROOT_API, API_HEADER } from "constants/api";
+import { API_HEADER, ROOT_API } from "constants/api";
+import { useEffect, useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { DELETE_TOKEN } from "store/Auth";
+import { removeCookieToken } from "store/Cookie";
+import "./mypage.scss";
+import AccountEdit from "./_com/accountEdit/AccoutEdit";
+import Follower from "./_com/follower/Follower";
+import GroupManage from "./_com/groupManage/GroupManage";
 
 const Mypage = () => {
   const navigate = useNavigate();
@@ -18,10 +22,6 @@ const Mypage = () => {
   const [createFolder, setCraeteFolder] = useState(false);
   const auth = useSelector((state) => state.authToken);
   const [modal, setModal] = useState(false);
-
-  const createfolder = () => {
-    setCraeteFolder(!createFolder);
-  };
 
   const clickTab = (type) => {
     setTab(type);
@@ -39,7 +39,7 @@ const Mypage = () => {
         `${ROOT_API}/login`,
         {
           // email: data.email,
-          status: 'D',
+          status: "D",
         },
         {
           headers: {
@@ -53,13 +53,21 @@ const Mypage = () => {
       });
   };
 
+  const logout = () => {
+    removeCookieToken();
+    dispatch(DELETE_TOKEN());
+    navigate("/");
+  };
+
   return (
     <>
       {auth.accessToken !== null ? (
         <div className="page my-page">
-          <Header />
           {modal && (
-            <BasicModal setOnModal={() => setModal(false)}>
+            <BasicModal
+              setOnModal={() => setModal(false)}
+              dimClick={() => setModal(false)}
+            >
               확인을 누르시면 탈퇴됩니다.
               <button onClick={deleteUser}>확인</button>
             </BasicModal>
@@ -83,7 +91,14 @@ const Mypage = () => {
                       >
                         정보 수정
                       </li>
-                      <li>팔로워/팔로윙</li>
+                      <li
+                        className={classnames("", {
+                          "is-select": tab === "follower",
+                        })}
+                        onClick={() => clickTab("follower")}
+                      >
+                        팔로워/팔로윙
+                      </li>
                     </ul>
                   </li>
                   <li>
@@ -108,47 +123,26 @@ const Mypage = () => {
                     </ul>
                   </li>
                 </ul>
+                <Button
+                  classname="default-button logout-button"
+                  onClick={logout}
+                >
+                  로그아웃
+                </Button>
                 <Button classname="default-button delete-button">
                   계정탈퇴
                 </Button>
               </div>
+
               <div
                 className={classnames("content-item", {
                   "is-account-edit": tab === "account-edit",
                   "is-group-manage": tab === "group-manage",
                 })}
               >
-                {tab === "group-manage" && (
-                  <>
-                    <div className="folder">
-                      <div className="controll">
-                        <span>폴더목록</span>
-                        <AiFillFolderAdd size={22} onClick={createfolder} />
-                      </div>
-                      {createFolder && <input type="text" />}
-                      <div className="folder-area"></div>
-                    </div>
-                    <div className="friend-list">
-                      친구 목록 <br />
-                      <ul>
-                        <li>aaa</li>
-                        <li>bbb</li>
-                      </ul>
-                      {/*
-                    폴더 목록에서 폴더 클릭하고 친구 목록 클릭하면 친구를 폴더로
-                    이동
-                  */}
-                    </div>
-                  </>
-                )}
-                {tab === "account-edit" && (
-                  <>
-                    <div className="account-edit">
-                      <label htmlFor="">비밀번호 확인</label>
-                      <input type="password" name="" id="" />
-                    </div>
-                  </>
-                )}
+                {tab === "group-manage" && <GroupManage />}
+                {tab === "account-edit" && <AccountEdit />}
+                {tab === "follower" && <Follower />}
               </div>
             </div>
           </div>

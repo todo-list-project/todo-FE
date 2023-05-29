@@ -1,4 +1,5 @@
 import React from "react";
+import { CookiesProvider } from "react-cookie";
 import ReactDOM from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
@@ -21,13 +22,15 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <Router history={history}>
-          <App />
-        </Router>
-      </QueryClientProvider>
-    </Provider>
+    <CookiesProvider>
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <Router history={history}>
+            <App />
+          </Router>
+        </QueryClientProvider>
+      </Provider>
+    </CookiesProvider>
   </React.StrictMode>
 );
 

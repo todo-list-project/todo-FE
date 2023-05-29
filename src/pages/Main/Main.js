@@ -29,7 +29,6 @@ const Main = () => {
 
   return (
     <div className="page main-page">
-      <Header />
       <div className="content">
         <Tab nav={["내 할일", "친구와 함께"]} classname="todo-tab" />
         <ControllerBox>

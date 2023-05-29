@@ -1,15 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import BasicModal from "components/portalModal/basicmodal/BasicModal";
-import "./regist.scss";
-import Header from "components/header/Header";
 import GoogleLogin from "components/snsLogin/GoogleLogin";
 import KakaoLogin from "components/snsLogin/KaKaoLogin";
-import { useNavigate } from "react-router-dom";
-import { ROOT_API, API_HEADER } from "constants/api";
-import { SET_TOKEN } from "store/Auth";
+import { API_HEADER, ROOT_API } from "constants/api";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { SET_TOKEN } from "store/Auth";
+import "./regist.scss";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -50,7 +49,6 @@ const Login = () => {
 
   return (
     <div className="page regist-page">
-      <Header />
       {modal && (
         <BasicModal setOnModal={() => setModal()}>
           회원가입이 완료되었습니다. <br />
