@@ -27,6 +27,8 @@ const Mypage = () => {
     setTab(type);
   };
 
+  console.log('auth', auth)
+
   useEffect(() => {
     if (auth.accessToken === null) {
       navigate("/login", { replace: true });
