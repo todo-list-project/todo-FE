@@ -37,7 +37,7 @@ const Findpw = () => {
       .then((response) => {
         console.log("res", response);
         setCode(true);
-        alert("인증 코드가 입력하신 메일로 발송되었습니다.");
+        // alert("인증 코드가 입력하신 메일로 발송되었습니다.");
       });
   };
 

@@ -1,0 +1,19 @@
+.account-edit {
+  .title {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid black;
+  }
+  .input-wrap {
+    margin: 6px 0;
+  }
+  .form {
+    margin-bottom: 30px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  button {
+    margin: 10px auto 0 auto;
+  }
+}
