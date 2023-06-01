@@ -7,13 +7,12 @@ import { HashRouter } from 'react-router-dom';
 import App from "./App";
 import "./assets/style/index.scss";
 import history from "./hooks/useHistory";
-import reportWebVitals from "./reportWebVitals";
+// import reportWebVitals from "./reportWebVitals";
 import store from "./store";
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import store from './store';
 const queryClient = new QueryClient({
     onError: (error, query) => {
         console.log('onError', error);
