@@ -14,12 +14,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient({
-    onError: (error, query) => {
-        console.log('onError', error);
-    },
-    onSuccess: (data) => {
-        console.log('data:', data);
-    },
+  onError: (error, query) => {
+    console.log('onError', error);
+  },
+  onSuccess: data => {
+    console.log('data:', data);
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
