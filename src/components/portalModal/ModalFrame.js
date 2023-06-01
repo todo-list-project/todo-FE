@@ -12,7 +12,7 @@ const ModalFrame = ({
   classname,
   isDim,
   zindex,
-  dimClick,
+  dimClick
 }) => {
   return (
     <PortalModal>

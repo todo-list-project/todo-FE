@@ -25,9 +25,7 @@ const Login = () => {
           <GoogleLogin />
           <KakaoLogin />
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Login;

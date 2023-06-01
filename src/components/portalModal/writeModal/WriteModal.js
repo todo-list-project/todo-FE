@@ -1,61 +1,107 @@
 import { Button, Checkbox, ConfigProvider, Input, Modal } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
-// import DatePicker from 'react-datepicker';
+import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import './writemodal.scss';
-import DatePicker from '../../datepicker/DatePicker';
+import { DatePicker } from 'antd';
 import FormatDate from '../../../util/FormatDate';
-import { useQuery } from 'react-query';
-// import TodoService from '../../../service/fetchTodo';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
 const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
-    const [value, setValue] = useState(initialValue);
+    const { RangePicker } = DatePicker;
+
     const [title, setTitle] = useState('');
     const [isChecked, setIsChecked] = useState(false); //친구에게만 보이기
-    const [startDate, setStartDate] = useState(new Date('2023-04-23')); //시작 날짜
-    const [endDate, setEndDate] = useState(new Date('2023-05-01')); //끝 날짜
     const [data, setData] = useState();
+    const [dates, setDates] = useState(null);
+    const [contents, setContents] = useState(null);
+    const [value, setValue] = useState(null);
+    const [startNewDate, setStartNewDate] = useState(null);
+    const [endNewDate, setEndNewDate] = useState(null);
 
-    let startNewDate = ''; //변환 한 시작날짜
-    let endNewDate = ''; //변환한 마지막날짜
-    // console.log(data);
+    // console.log('value1', startNewDate);
+    // console.log('value2', endNewDate);
+    console.log('dates', dates);
+    console.log('value', value);
     const changeTitle = (e) => {
         setTitle(e.target.value);
     };
 
-    const changeValue = (e) => {
-        setValue(e.target.value);
+    const changeArea = (e) => {
+        setContents(e.target.value);
     };
 
     const handleCheckboxChange = (e) => {
         setIsChecked(e.target.checked);
     };
 
-    useMemo(() => {
-        startNewDate = FormatDate(startDate);
-        // console.log('새로운 시작날짜', startNewDate);
-        endNewDate = FormatDate(endDate);
-        // console.log('새로운 끝날짜', endNewDate);
-    }, [startDate, endDate]);
+    useEffect(() => {
+        if (value) {
+            const startDate = FormatDate(value[0].$d);
+            const endDate = FormatDate(value[1].$d);
+            setStartNewDate(startDate);
+            setEndNewDate(endDate);
+        }
+    }, [value]);
 
     useEffect(() => {
+        console.log('startNewDate', startNewDate);
+        console.log('endNewDate', endNewDate);
         setData({
             title: title,
-            isChecked: isChecked,
+            description: contents,
+            shared: isChecked,
             startDate: startNewDate,
             endDate: endNewDate,
         });
     }, [title, isChecked, startNewDate, endNewDate]);
 
     //서버로 문의글 전송
-    // const handleSave = async () => {
-    //     const { Todowrite, isLoading } = useQuery(getWriteTodo, TodoService);
-    // };
+    const writeTodo = async () => {
+        try {
+            const response = await axios.post('http://localhost:4000/todos', {
+                title: title,
+                description: contents,
+                shared: isChecked,
+                startDate: startNewDate,
+                endDate: endNewDate,
+            });
+            console.log(response);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const mutation = useMutation(writeTodo);
+    //전송
+    const handleSave = async () => {
+        console.log('mutation', mutation);
+        mutation.mutate();
+    };
+
     //취소
     const handleCancel = () => {
         onCancel();
     };
 
+    // rangpicker
+    const disabledDate = (current) => {
+        if (!dates) {
+            return false;
+        }
+        const tooLate = dates[0] && current.diff(dates[0], 'days') >= 365;
+        const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 365;
+        return !!tooEarly || !!tooLate;
+    };
+
+    const onOpenChange = (open) => {
+        if (open) {
+            setDates([null, null]);
+        } else {
+            setDates(null);
+        }
+    };
+    // rangpicker
     return (
         <Modal open={visible} onCancel={handleCancel} footer={null}>
             <Input
@@ -65,39 +111,48 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
                 onChange={changeTitle}
             />
             <Input.TextArea
-                value={value}
-                onChange={changeValue}
+                value={contents}
+                onChange={changeArea}
                 placeholder="Write something"
-                autoSize={{ minRows: 4, maxRows: 5 }}
+                autoSize={{ minRows: 2, maxRows: 3 }}
             />
             <Checkbox checked={isChecked} onChange={handleCheckboxChange}>
                 친구에게도 보이기
             </Checkbox>
-            <div style={{ marginTop: '1rem', textAlign: 'right' }}>
-                <ConfigProvider
-                    theme={{
-                        token: {
-                            colorPrimary: '#00b96b',
-                        },
+            <div className="writeModalBottom">
+                <RangePicker
+                    value={dates || value}
+                    disabledDate={disabledDate}
+                    onCalendarChange={(val) => {
+                        setDates(val);
                     }}
-                >
-                    <Button onClick={handleCancel} style={{ marginRight: '0.5rem' }}>
-                        취소
-                    </Button>
-                    <Button type="primary" 
-                    // onClick={handleSave}
-                    >
-                        저장
-                    </Button>
-                </ConfigProvider>
-            </div>
+                    onChange={(val) => {
+                        setValue(val);
+                    }}
+                    onOpenChange={onOpenChange}
+                    changeOnBlur
+                />
 
-            <DatePicker
-                startDate={startDate}
-                setStartDate={setStartDate}
-                endDate={endDate}
-                setEndDate={setEndDate}
-            />
+                <div>
+                    <ConfigProvider
+                        theme={{
+                            token: {
+                                colorPrimary: '#00b96b',
+                            },
+                        }}
+                    >
+                        <Button
+                            onClick={handleCancel}
+                            style={{ marginRight: '0.5rem' }}
+                        >
+                            취소
+                        </Button>
+                        <Button type="primary" onClick={handleSave}>
+                            저장
+                        </Button>
+                    </ConfigProvider>
+                </div>
+            </div>
         </Modal>
     );
 };
