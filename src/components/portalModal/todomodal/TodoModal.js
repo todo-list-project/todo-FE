@@ -7,8 +7,8 @@ import './todomodal.scss';
 
 const TodoModal = ({ setOnModal, todoItem }) => {
   const { RangePicker } = DatePicker;
-  // console.log('todoItem', todoItem);
-  const [modify, setModify] = useState(false);
+  console.log('todoItem', todoItem);
+  const [modify, setModify] = useState(false); //수정모드
   const [startDate, setStartDate] = useState(new Date('2023-04-23')); //시작 날짜
   const [endDate, setEndDate] = useState(new Date('2023-05-01')); //끝 날짜
   const [dates, setDates] = useState(null);
@@ -38,12 +38,8 @@ const TodoModal = ({ setOnModal, todoItem }) => {
     // onClose 넣으면 close버튼 생기고, close 누르면 모달 닫힘.
     // 둘다 넣으면 둘 중하나만 클릭해도 모달 닫힘
     <ModalFrame setOnModal={setOnModal} classname="info-modal" isDim onClose>
-      <div>{todoItem.element.id}</div>
-      {modify ? (
-        <TextArea todoItem={todoItem.element.title}></TextArea>
-      ) : (
-        todoItem.element.title
-      )}
+      <div className="todo-modal-id">{todoItem.element.id}</div>
+      {modify ? <TextArea todoItem={todoItem.element.title}></TextArea> : todoItem.element.title}
       <br />
 
       <RangePicker

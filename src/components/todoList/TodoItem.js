@@ -11,12 +11,13 @@ const TodoItem = props => {
   // };
 
   const [onModal, setOnModal] = useState(false);
-
+  // console.log(props);
   return (
     <>
       <div onClick={() => setOnModal(true)} className="todo-item" ref={props.ref}>
-        {props.element.title}
+        <h1>{props.element.title}</h1>
         <div>{props.element.id}</div>
+        <div></div>
       </div>
       {onModal && <TodoModal todoItem={props} setOnModal={() => setOnModal()} />}
     </>

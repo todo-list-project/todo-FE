@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import FormatDate from '../../../util/FormatDate';
 import './writemodal.scss';
+import { API_HEADER, ROOT_API } from 'constants/api';
+import { useSelector } from 'react-redux';
 
 const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
   const { RangePicker } = DatePicker;
@@ -17,7 +19,8 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
   const [value, setValue] = useState(null);
   const [startNewDate, setStartNewDate] = useState(null);
   const [endNewDate, setEndNewDate] = useState(null);
-
+  const auth = useSelector(state => state.authToken);
+  console.log(auth);
   // console.log('value1', startNewDate);
   // console.log('value2', endNewDate);
   // console.log('dates', dates);
@@ -58,13 +61,19 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
   //서버로 문의글 전송
   const writeTodo = async () => {
     try {
-      const response = await axios.post('http://localhost:4000/todos', {
-        title: title,
-        description: contents,
-        shared: isChecked,
-        startDate: startNewDate,
-        endDate: endNewDate,
-      });
+      const response = await axios.post(
+        `${ROOT_API}/posts/create`,
+        {
+          title: title,
+          description: contents,
+          shared: isChecked,
+          startDate: startNewDate,
+          endDate: endNewDate,
+        },
+        {
+          headers: { API_HEADER, atk: auth.accessToken },
+        },
+      );
       console.log('response', response);
       return response.data;
     } catch (error) {
