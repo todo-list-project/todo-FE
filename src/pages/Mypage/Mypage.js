@@ -59,8 +59,6 @@ const Mypage = () => {
     navigate("/");
   };
 
-  console.log('auth', auth)
-
   return (
     <>
       {auth.accessToken !== null ? (
