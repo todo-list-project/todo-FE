@@ -13,4 +13,12 @@
     font-size: 20px;
     text-align: center;
   }
+  .todo-modal-bottomWrap {
+    display: flex;
+    align-items: center;
+  }
+  .todo-modal-btnWrap {
+    display: flex;
+    justify-content: end;
+  }
 }

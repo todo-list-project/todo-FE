@@ -41,27 +41,33 @@ const TodoModal = ({ setOnModal, todoItem }) => {
       <div className="todo-modal-id">{todoItem.element.id}</div>
       {modify ? <TextArea todoItem={todoItem.element.title}></TextArea> : todoItem.element.title}
       <br />
-
-      <RangePicker
-        value={dates || value}
-        disabledDate={disabledDate}
-        onCalendarChange={val => {
-          setDates(val);
-        }}
-        onChange={val => {
-          setValue(val);
-        }}
-        onOpenChange={onOpenChange}
-        changeOnBlur
-      />
-
-      <button
-        onClick={() => {
-          setModify(true);
-        }}
-      >
-        수정
-      </button>
+      <div className="todo-modal-bottomWrap">
+        <div className="todo-modal-rangePickerWrap">
+          <RangePicker
+            value={dates || value}
+            disabledDate={disabledDate}
+            onCalendarChange={val => {
+              setDates(val);
+            }}
+            onChange={val => {
+              setValue(val);
+            }}
+            onOpenChange={onOpenChange}
+            changeOnBlur
+          />
+        </div>
+        <div className="todo-modal-btnWrap">
+          <button
+            className="todo-modal-modifyBtn"
+            onClick={() => {
+              setModify(true);
+            }}
+          >
+            수정
+          </button>
+          <button className="todo-modal-cancelBtn">취소</button>
+        </div>
+      </div>
     </ModalFrame>
   );
 };

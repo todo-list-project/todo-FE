@@ -83,7 +83,7 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
   const mutation = useMutation(writeTodo);
   //전송
   const handleSave = async () => {
-    console.log('mutation', mutation);
+    console.log('글쓰기 전송 mutation', mutation);
     mutation.mutate();
     onSave();
   };

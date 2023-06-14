@@ -5,7 +5,7 @@ export const TOKEN_TIME_OUT = 600 * 1000;
 export const tokenSlice = createSlice({
   name: 'authToken',
   initialState: {
-    authenticated: false,
+    authenticated: null,
     accessToken: null,
     expireTime: null,
   },

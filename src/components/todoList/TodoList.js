@@ -9,7 +9,7 @@ const TodoList = () => {
   const { data, fetchNextPage, hasNextPage } = useDummyData();
 
   const todoData = changeInfiniteScrollDataToArray(data);
-  //   console.log('todoData', todoData);
+  console.log('뿌려지는 todoData', todoData);
   const onIntersection = useCallback(
     entries => {
       // console.log('entries', entries);

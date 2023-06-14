@@ -6,6 +6,7 @@ import { setRefreshToken } from 'store/Cookie';
 import { SET_TOKEN } from 'store/Auth';
 
 const Form = ({ type, success }) => {
+  console.log(type);
   const dispatch = useDispatch();
 
   const {
