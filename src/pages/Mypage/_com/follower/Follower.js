@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ROOT_API, API_HEADER } from "constants/api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Follower = () => {
@@ -29,6 +29,19 @@ const Follower = () => {
         console.log("res", res);
       });
   };
+
+  useEffect(() => {
+    axios
+      .get(`${ROOT_API}/followings`, {
+        headers: {
+          API_HEADER,
+          atk: auth.accessToken,
+        },
+      })
+      .then((res) => {
+        console.log("res", res);
+      });
+  }, [])
 
   return (
     <div className="follower">

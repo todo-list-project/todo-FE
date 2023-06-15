@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { API_HEADER, ROOT_API } from 'constants/api';
-import { useDispatch } from 'react-redux';
+import axios from "axios";
+import { API_HEADER, ROOT_API } from "constants/api";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { setRefreshToken } from "store/Cookie";
 import { SET_TOKEN } from "store/Auth";
@@ -18,7 +18,7 @@ const Form = ({ type, success }) => {
   const onSubmit = async (data) => {
     await new Promise((r) => setTimeout(r, 1000));
 
-    if (type === 'login') {
+    if (type === "login") {
       axios
         .post(
           `${ROOT_API}/login`,
@@ -40,7 +40,7 @@ const Form = ({ type, success }) => {
           reset();
         });
     }
-    if (type === 'regist') {
+    if (type === "regist") {
       axios
         .post(
           `${ROOT_API}/join`,
@@ -57,10 +57,27 @@ const Form = ({ type, success }) => {
           }
         )
         .then((response) => {
-          console.log('re', response);
-          dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
-          success(true);
+          console.log("re", response);
           reset();
+          axios
+            .post(
+              `${ROOT_API}/login`,
+              {
+                email: data.email,
+                password: data.password,
+              },
+              {
+                headers: {
+                  API_HEADER,
+                },
+              }
+            )
+            .then((response) => {
+              localStorage.setItem("refressToken", response.data[0].token);
+              dispatch(SET_TOKEN({ accessToken: response.data[1].token }));
+              success(true);
+              reset();
+            });
         });
     }
   };
@@ -83,7 +100,7 @@ const Form = ({ type, success }) => {
         />
         {errors.eamil && <small role="alert">{errors.eamil.message}</small>}
       </div>
-      {type === 'regist' &&
+      {type === "regist" && (
         <div className="input-wrap">
           <label htmlFor="name">이름</label>
           <input
@@ -100,7 +117,7 @@ const Form = ({ type, success }) => {
           />
           {errors.name && <small role="alert">{errors.name.message}</small>}
         </div>
-      }
+      )}
       <div className="input-wrap">
         <label htmlFor="password">비밀번호</label>
         <input
@@ -115,22 +132,16 @@ const Form = ({ type, success }) => {
             },
           })}
         />
-        {errors.password && (
-          <small role="alert">{errors.password.message}</small>
-        )}
+        {errors.password && <small role="alert">{errors.password.message}</small>}
       </div>
       <div className="button-wrap">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="default-button submit-button"
-        >
-          {type === 'login' && '로그인'}
-          {type === 'regist' && '회원가입'}
+        <button type="submit" disabled={isSubmitting} className="default-button submit-button">
+          {type === "login" && "로그인"}
+          {type === "regist" && "회원가입"}
         </button>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;
