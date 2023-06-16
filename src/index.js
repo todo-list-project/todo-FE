@@ -14,12 +14,15 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient({
-    onError: (error, query) => {
-        console.log('onError', error);
+  defaultOptions: {
+    queries: {
+      retry: 0,
+      suspense: false,
+      refetchOnMount: true,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
     },
-    onSuccess: (data) => {
-        console.log('data:', data);
-    },
+  },
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

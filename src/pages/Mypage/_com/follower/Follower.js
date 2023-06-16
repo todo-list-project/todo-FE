@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 
 const Follower = () => {
   const [text, setText] = useState("");
+  const [followings, setFollowings] = useState();
+  const [follow, setFollow] = useState();
   const auth = useSelector((state) => state.authToken);
 
   const onChange = (e) => {
@@ -12,36 +14,45 @@ const Follower = () => {
   };
   const apply = () => {
     console.log("text", text);
-    axios
-      .post(
-        `${ROOT_API}/follows`,
-        {
-          email: text,
+    axios.post(
+      `${ROOT_API}/follows`,
+      {
+        email: text,
+      },
+      {
+        headers: {
+          API_HEADER,
+          atk: auth.accessToken,
         },
-        {
-          headers: {
-            API_HEADER,
-            atk: auth.accessToken
-          },
-        }
-      )
-      .then((res) => {
-        console.log("res", res);
-      });
+      }
+    );
   };
 
   useEffect(() => {
     axios
-      .get(`${ROOT_API}/followings`, {
+      .get(`${ROOT_API}/follows/followings`, {
         headers: {
           API_HEADER,
           atk: auth.accessToken,
         },
       })
       .then((res) => {
-        console.log("res", res);
+        setFollowings(res.data);
       });
-  }, [])
+
+    axios
+      .get(`${ROOT_API}/follows/follow`, {
+        headers: {
+          API_HEADER,
+          atk: auth.accessToken,
+        },
+      })
+      .then((res) => {
+        setFollow(res.data);
+      });
+  }, []);
+
+  // console.log('dd', followings);
 
   return (
     <div className="follower">
@@ -51,7 +62,10 @@ const Follower = () => {
         <button onClick={apply}>팔로워 요청</button>
       </div>
       <div className="list">
-        팔로워 리스트
+        <div>팔로워</div>
+        {follow && follow.map((item, index) => <div key={index}>{item.email}</div>)}
+        <div>팔로윙</div>
+        {followings && followings.map((item, index) => <div key={index}>{item.email}</div>)}
       </div>
     </div>
   );
