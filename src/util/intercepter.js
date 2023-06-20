@@ -1,24 +1,29 @@
-import axios from 'axios';
-import { API_HEADER, ROOT_API } from 'constants/api';
-import { setRefreshToken, getRefreshToken } from 'store/Cookie';
-import { SET_TOKEN } from 'store/Auth';
+import axios from "axios";
+import { API_HEADER, ROOT_API } from "constants/api";
+import { getCookieToken } from "store/Cookie";
+import store from "../store/index";
 
 const API = axios.create({
-  baseURL: `${ROOT_API}/login`,
+  baseURL: `${ROOT_API}`,
   headers: { API_HEADER },
 });
 
-API.interceptors.response.use(
-  response => {
-    return response;
-  },
-  async error => {
-    const originalRequest = error.config;
-    if (error.response.status === 401 && loginRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        const response = getRefreshToken();
-      } catch {}
-    }
-  },
-);
+// console.log("store", store);
+// API.interceptors.request.use(
+//   async (config) => {
+//     const refreshToken = getCookieToken();
+//     const accessToken = store.getState().authToken.accessToken;
+//     console.log("refreshToken", refreshToken);
+//     console.log("accessToken", accessToken);
+
+//     if (accessToken) {
+//       config.headers.Authorization = `Bearer${accessToken}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
+
+export default API;

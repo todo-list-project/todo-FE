@@ -13,14 +13,14 @@ const Login = () => {
   return (
     <div className="page regist-page">
       {modal && (
-        <BasicModal setOnModal={() => setModal()}>
+        <BasicModal setOnModal={() => setModal()} dimClick={() => navigate("/")}>
           회원가입이 완료되었습니다. <br />
           확인을 누르시면 메인으로 이동합니다.
           <button onClick={() => navigate('/')}>확인</button>
         </BasicModal>
       )}
       <div className="content">
-        <Form type="regist" />
+        <Form type="regist" success={setModal} />
         <div className="social-login">
           <GoogleLogin />
           <KakaoLogin />

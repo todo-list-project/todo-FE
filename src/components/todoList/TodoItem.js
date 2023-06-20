@@ -1,17 +1,10 @@
-import TodoModal from 'components/portalModal/todomodal/TodoModal';
-import React, { useState } from 'react';
-import './todo.scss';
+import TodoModal from "components/portalModal/todomodal/TodoModal";
+import React, { useState } from "react";
+import "./todo.scss";
 
-const TodoItem = props => {
-  // console.log('todoItem', props);
-  // const dispatch = useDispatch();
-
-  // const handleTodoClick = () => {
-  //     dispatch(openModal(props.element));
-  // };
-
+const TodoItem = (props) => {
   const [onModal, setOnModal] = useState(false);
-  // console.log(props);
+
   return (
     <>
       <div onClick={() => setOnModal(true)} className="todo-item" ref={props.ref}>

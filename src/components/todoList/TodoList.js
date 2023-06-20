@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import TodoItem from './TodoItem';
-import './todo.scss';
-import { useDummyData } from '../../api';
-import { changeInfiniteScrollDataToArray } from 'util/changeInfiniteScrollDataToArray';
-import useIntesectionObserver from 'hook/useIntesectionObserver';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import TodoItem from "./TodoItem";
+import "./todo.scss";
+import { useDummyData } from "../../api";
+import { changeInfiniteScrollDataToArray } from "util/changeInfiniteScrollDataToArray";
+import useIntesectionObserver from "hook/useIntesectionObserver";
 
 const TodoList = () => {
   const { data, fetchNextPage, hasNextPage } = useDummyData();
 
   const todoData = changeInfiniteScrollDataToArray(data);
-  console.log('뿌려지는 todoData', todoData);
+  // console.log("뿌려지는 todoData", todoData);
   const onIntersection = useCallback(
-    entries => {
+    (entries) => {
       // console.log('entries', entries);
       const [target] = entries;
 
@@ -19,13 +19,13 @@ const TodoList = () => {
         fetchNextPage();
       }
     },
-    [hasNextPage, fetchNextPage],
+    [hasNextPage, fetchNextPage]
   );
 
   const { setTarget } = useIntesectionObserver({
     onIntersection,
     options: {
-      rootMargin: '10%',
+      rootMargin: "10%",
       threshold: 0.25,
     },
   });
@@ -38,11 +38,11 @@ const TodoList = () => {
       </div>
       {hasNextPage && (
         <div
-          ref={elem => setTarget(elem)}
+          ref={(elem) => setTarget(elem)}
           style={{
-            width: '100px',
-            height: '50px',
-            backgroundColor: '#ccc',
+            width: "100px",
+            height: "50px",
+            backgroundColor: "#ccc",
           }}
         >
           로딩중...

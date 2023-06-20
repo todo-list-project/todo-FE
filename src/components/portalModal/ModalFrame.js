@@ -1,16 +1,15 @@
 // ModalFrame.tsx
 
-import React from 'react';
-import PortalModal from './PortalModal';
-import classnames from 'classnames';
-import './portalmodal.scss';
+import React from "react";
+import PortalModal from "./PortalModal";
+import classnames from "classnames";
+import "./portalmodal.scss";
 
 const ModalFrame = ({ children, setOnModal, onClose, classname, isDim, zindex }) => {
-  console.log(children);
   return (
     <PortalModal>
-      <div className={classnames('modal')} style={{ zIndex: zindex }}>
-        <div className={classnames('', classname)}>
+      <div className={classnames("modal")} style={{ zIndex: zindex }}>
+        <div className={classnames("", classname)}>
           {onClose && (
             <button className="close" onClick={() => setOnModal(false)}>
               X
