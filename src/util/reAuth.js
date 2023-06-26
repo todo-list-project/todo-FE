@@ -1,28 +1,30 @@
-import React from "react";
-import { getCookieToken } from "store/Cookie";
-import store from "../store/index";
-import API from "./intercepter";
 // import jwt from "jsonwebtoken";
-import { API_HEADER, ROOT_API } from "../constants/api";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_TOKEN } from "store/Auth";
+import { API_HEADER, ROOT_API } from "../constants/api";
 
 export async function useReAuth() {
   const auth = useSelector((state) => state.authToken);
+  const dispatch = useDispatch();
 
   const getrtk = localStorage.getItem("refreshToken");
   const getemail = localStorage.getItem("email");
-  if (auth.accessToken === null && getrtk !== undefined) {
-    console.log('dd');
+  if (auth.accessToken === null && getrtk) {
     try {
-      const response = await axios.get(`${ROOT_API}/accesstoken`, {
-        params: { email: getemail },
-        headers: {
-          API_HEADER,
-          rtk: getrtk,
+      const response = await axios.post(
+        `${ROOT_API}/accesstoken`,
+        {
+          email: getemail,
         },
-      });
-      console.log('res', response);
+        {
+          headers: {
+            API_HEADER,
+            rtk: getrtk,
+          },
+        }
+      );
+      dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
     } catch (error) {
       console.error("Token refresh failed", error);
     }

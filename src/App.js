@@ -12,9 +12,6 @@ import { ReAuth } from "ReAuth";
 function App() {
   useReAuth();
   // ReAuth();
-  useEffect(() => {
-    // console.log("aa", auth);
-  }, []);
 
   return (
     <div className="App">
