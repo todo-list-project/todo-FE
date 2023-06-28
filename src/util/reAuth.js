@@ -16,16 +16,18 @@ export async function reAuth() {
     try {
       console.log("아이디 가져올 수 있냐?", getLoginEmail);
       console.log("새로고침시 리프레쉬토큰 존재?", refreshToken);
-      const datas = JSON.stringify({
-        email: getLoginEmail,
-      });
-      const response = axios.get(`${ROOT_API}/accesstoken`, {
-        headers: {
-          API_HEADER,
-          rtk: refreshToken,
+      const response = axios.post(
+        `${ROOT_API}/accesstoken`,
+        {
+          email: getLoginEmail,
         },
-        data: datas,
-      });
+        {
+          headers: {
+            API_HEADER,
+            rtk: refreshToken,
+          },
+        }
+      );
       console.log(response);
     } catch (error) {
       console.error("Token refresh failed", error);

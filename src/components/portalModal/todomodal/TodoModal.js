@@ -1,36 +1,38 @@
-import { DatePicker } from 'antd';
-import TextArea from 'components/input/TextArea';
-import { useState } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
-import ModalFrame from '../ModalFrame';
-import './todomodal.scss';
+import { DatePicker } from "antd";
+import TextArea from "components/input/TextArea";
+import { useState } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import ModalFrame from "../ModalFrame";
+import "./todomodal.scss";
+import moment from "moment";
 
 const TodoModal = ({ setOnModal, todoItem }) => {
   const { RangePicker } = DatePicker;
-  console.log('todoItem', todoItem);
+  console.log("todoItem", todoItem);
   const [modify, setModify] = useState(false); //수정모드
-  const [startDate, setStartDate] = useState(new Date('2023-04-23')); //시작 날짜
-  const [endDate, setEndDate] = useState(new Date('2023-05-01')); //끝 날짜
+  // const [startDate, setStartDate] = useState(moment(todoItem.startDate));
+  // const [endDate, setEndDate] = useState(moment(todoItem.endDate));
   const [dates, setDates] = useState(null);
   const [value, setValue] = useState(null);
-
+  console.log(dates);
   // rangpicker
-  const disabledDate = current => {
+  const disabledDate = (current) => {
     if (!dates) {
       return false;
     }
-    const tooLate = dates[0] && current.diff(dates[0], 'days') >= 365;
-    const tooEarly = dates[1] && dates[1].diff(current, 'days') >= 365;
+    const tooLate = dates[0] && current.diff(dates[0], "days") >= 7;
+    const tooEarly = dates[1] && dates[1].diff(current, "days") >= 7;
     return !!tooEarly || !!tooLate;
   };
 
-  const onOpenChange = open => {
+  const onOpenChange = (open) => {
     if (open) {
       setDates([null, null]);
     } else {
       setDates(null);
     }
   };
+
   // rangpicker
 
   return (
@@ -46,10 +48,10 @@ const TodoModal = ({ setOnModal, todoItem }) => {
           <RangePicker
             value={dates || value}
             disabledDate={disabledDate}
-            onCalendarChange={val => {
+            onCalendarChange={(val) => {
               setDates(val);
             }}
-            onChange={val => {
+            onChange={(val) => {
               setValue(val);
             }}
             onOpenChange={onOpenChange}

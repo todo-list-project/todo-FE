@@ -1,14 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button, Checkbox, ConfigProvider, DatePicker, Input, Modal } from "antd";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
-import FormatDate from "../../../util/FormatDate";
-import "./writemodal.scss";
-import { API_HEADER, ROOT_API } from "constants/api";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { API_HEADER, ROOT_API } from "../../../constants/api";
+import { formatDate } from "../../../util/FormatDate";
+import "./writemodal.scss";
 
-const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
+const WriteModal = ({ visible, onCancel }) => {
   const { RangePicker } = DatePicker;
 
   const [data, setData] = useState({
@@ -23,11 +23,8 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
   const [startNewDate, setStartNewDate] = useState(null);
   const [endNewDate, setEndNewDate] = useState(null);
   const auth = useSelector((state) => state.authToken);
-  // console.log(auth);
-  // console.log('value1', startNewDate);
-  // console.log('value2', endNewDate);
-  // console.log('dates', dates);
-  // console.log('value', value);
+  const queryClient = useQueryClient();
+
   const changeTitle = (e) => {
     setData({ ...data, title: e.target.value });
   };
@@ -42,47 +39,57 @@ const WriteModal = ({ visible, onCancel, onSave, initialValue }) => {
 
   useEffect(() => {
     if (value) {
-      const startDate = FormatDate(value[0].$d);
-      const endDate = FormatDate(value[1].$d);
+      const startDate = formatDate(value[0].$d);
+      const endDate = formatDate(value[1].$d);
       setStartNewDate(startDate);
       setEndNewDate(endDate);
     }
   }, [value]);
 
   //서버로 글 전송
-  const writeTodo = async () => {
-    try {
-      const response = await axios.post(
-        `${ROOT_API}/posts/create`,
-        {
-          title: data.title,
-          description: data.description,
-          shared: data.shared,
-          startDate: startNewDate,
-          endDate: endNewDate,
-        },
-        {
-          headers: { API_HEADER, atk: auth.accessToken },
-        }
-      );
-      console.log("response", response);
-    } catch (error) {
-      console.log(error);
-    }
+  const addTodo = async () => {
+    // console.log("data.title", data.title);
+    const response = await axios.post(
+      `${ROOT_API}/posts/create`,
+      {
+        title: data.title,
+        description: data.description,
+        shared: data.shared,
+        startDate: startNewDate,
+        endDate: endNewDate,
+      },
+      {
+        headers: { API_HEADER, atk: auth.accessToken },
+      }
+    );
+    return response;
   };
-  const writeMutation = useMutation(writeTodo, { data });
+
+  const { mutate } = useMutation(addTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["todos"]);
+      console.log("queryClient", queryClient);
+    },
+  });
+
   //전송
-  const handleSave = async () => {
-    console.log("글쓰기 전송 mutation", writeMutation);
-    writeMutation.mutate(data);
-    onSave(writeMutation);
-  };
+  const handleSave = useCallback(() => {
+    mutate(data);
+    onCancel();
+    // setData({ title: "", description: "", shared: false, startDate: null, endDate: null });
+  }, [mutate, data, onCancel]);
 
   //취소
   const handleCancel = () => {
     onCancel();
     setData({ title: "", description: "", shared: false, startDate: null, endDate: null });
   };
+
+  useEffect(() => {
+    if (!visible) {
+      setData({ title: "", description: "", shared: false, startDate: null, endDate: null });
+    }
+  }, [visible]);
 
   // rangpicker
   const disabledDate = (current) => {

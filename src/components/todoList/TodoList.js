@@ -7,7 +7,7 @@ import useIntesectionObserver from "hook/useIntesectionObserver";
 
 const TodoList = () => {
   const { data, fetchNextPage, hasNextPage } = useDummyData();
-
+  // console.log(data);
   const todoData = changeInfiniteScrollDataToArray(data);
   // console.log("뿌려지는 todoData", todoData);
   const onIntersection = useCallback(
