@@ -14,45 +14,36 @@ const Follower = () => {
   };
   const apply = () => {
     console.log("text", text);
-    axios.post(
-      `${ROOT_API}/follows`,
-      {
-        email: text,
-      },
-      {
-        headers: {
-          API_HEADER,
-          atk: auth.accessToken,
+    axios
+      .post(
+        `${ROOT_API}/follows`,
+        {
+          email: text,
         },
-      }
-    );
+        {
+          headers: {
+            API_HEADER,
+            atk: auth.accessToken
+          },
+        }
+      )
+      .then((res) => {
+        console.log("res", res);
+      });
   };
 
   useEffect(() => {
     axios
-      .get(`${ROOT_API}/follows/followings`, {
+      .get(`${ROOT_API}/followings`, {
         headers: {
           API_HEADER,
           atk: auth.accessToken,
         },
       })
       .then((res) => {
-        setFollowings(res.data);
+        console.log("res", res);
       });
-
-    axios
-      .get(`${ROOT_API}/follows/follow`, {
-        headers: {
-          API_HEADER,
-          atk: auth.accessToken,
-        },
-      })
-      .then((res) => {
-        setFollow(res.data);
-      });
-  }, []);
-
-  // console.log('dd', followings);
+  }, [])
 
   return (
     <div className="follower">

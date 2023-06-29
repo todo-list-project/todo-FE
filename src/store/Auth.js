@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const TOKEN_TIME_OUT = 600 * 1000;
 
 export const tokenSlice = createSlice({
-  name: "authToken",
+  name: 'authToken',
   initialState: {
-    authenticated: false,
+    authenticated: null,
     accessToken: null,
     expireTime: null,
   },
@@ -15,7 +15,7 @@ export const tokenSlice = createSlice({
       state.accessToken = action.payload.accessToken;
       state.expireTime = new Date().getTime() + TOKEN_TIME_OUT;
     },
-    DELETE_TOKEN: (state) => {
+    DELETE_TOKEN: state => {
       state.authenticated = false;
       state.accessToken = null;
       state.expireTime = null;

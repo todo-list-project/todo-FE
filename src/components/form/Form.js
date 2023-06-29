@@ -6,6 +6,7 @@ import { setRefreshToken } from "store/Cookie";
 import { SET_TOKEN } from "store/Auth";
 
 const Form = ({ type, success }) => {
+  // console.log(type);
   const dispatch = useDispatch();
 
   const {
@@ -34,6 +35,7 @@ const Form = ({ type, success }) => {
         )
         .then((response) => {
           console.log("rr", response);
+          // localStorage.setItem("loginData", data.email);
           localStorage.setItem("refressToken", response.data[0].token);
           dispatch(SET_TOKEN({ accessToken: response.data[1].token }));
           success(true);

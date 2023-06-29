@@ -5,8 +5,21 @@ import Mypage from "pages/Mypage/Mypage";
 import Regist from "pages/Regist/Regist";
 import Findpw from "pages/findpw/Findpw";
 import { Route, Routes, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+// import { setRefreshToken, getRefreshToken } from "store/Cookie";
+// import { SET_TOKEN } from "store/Auth";
+import { useSelector } from "react-redux";
+import { reAuth } from "util/reAuth";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const auth = useSelector((state) => state.authToken);
+  console.log("새로고침시 auth 바꾸기", auth.accessToken);
+  useEffect(() => {
+    reAuth();
+  }, []);
   return (
     <div className="App">
       <Routes>

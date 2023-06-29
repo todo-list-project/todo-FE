@@ -12,15 +12,14 @@ import TopButton from "components/topButton/TopButton";
 const Main = () => {
   const [onModal, setOnModal] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [todoData, setTodoData] = useState("");
+  const [todoData, setTodoData] = useState([]);
 
-  // console.log('할일추가 ', todoData);
+  // console.log("할일추가 ", todoData);
   const handleModalCancel = () => {
     setVisible(false);
   };
 
-  const handleModalSave = (value) => {
-    setTodoData(value);
+  const handleModalSave = () => {
     setVisible(false);
   };
 
@@ -30,21 +29,14 @@ const Main = () => {
         <Tab nav={["내 할일", "친구와 함께"]} classname="todo-tab" />
         <ControllerBox>
           <Filter />
-          <Button
-            onClick={() => setVisible(true)}
-            classname={"default-button add-button"}
-          >
+          <Button onClick={() => setVisible(true)} classname={"default-button add-button"}>
             할일 추가
           </Button>
         </ControllerBox>
         <TodoList />
       </div>
       <TopButton />
-      <WriteModal
-        visible={visible}
-        onCancel={handleModalCancel}
-        onSave={handleModalSave}
-      />
+      <WriteModal visible={visible} onCancel={handleModalCancel} onSave={handleModalSave} />
       {onModal && <TodoModal setOnModal={() => setOnModal()} />}
     </div>
   );
