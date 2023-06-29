@@ -10,20 +10,20 @@ const TodoList = () => {
   // console.log(data);
   const todoData = changeInfiniteScrollDataToArray(data);
   // console.log("뿌려지는 todoData", todoData);
-  const onIntersection = useCallback(
-    (entries) => {
-      // console.log('entries', entries);
-      const [target] = entries;
+  // const onIntersection = useCallback(
+  //   (entries) => {
+  //     // console.log('entries', entries);
+  //     const [target] = entries;
 
-      if (target.isIntersecting && hasNextPage) {
-        fetchNextPage();
-      }
-    },
-    [hasNextPage, fetchNextPage]
-  );
+  //     if (target.isIntersecting && hasNextPage) {
+  //       fetchNextPage();
+  //     }
+  //   },
+  //   [hasNextPage, fetchNextPage]
+  // );
 
   const { setTarget } = useIntesectionObserver({
-    onIntersection,
+    // onIntersection,
     options: {
       rootMargin: "10%",
       threshold: 0.25,
@@ -32,22 +32,26 @@ const TodoList = () => {
   return (
     <div>
       <div className="todo-list">
-        {todoData.map((element, idx) => {
-          return <TodoItem element={element} key={idx} />;
-        })}
+        {
+        //   todoData.map((element, idx) => {
+        //   return <TodoItem element={element} key={idx} />;
+        // })
+      }
       </div>
-      {hasNextPage && (
-        <div
-          ref={(elem) => setTarget(elem)}
-          style={{
-            width: "100px",
-            height: "50px",
-            backgroundColor: "#ccc",
-          }}
-        >
-          로딩중...
-        </div>
-      )}
+      {
+      //   hasNextPage && (
+      //   <div
+      //     ref={(elem) => setTarget(elem)}
+      //     style={{
+      //       width: "100px",
+      //       height: "50px",
+      //       backgroundColor: "#ccc",
+      //     }}
+      //   >
+      //     로딩중...
+      //   </div>
+      // )
+    }
     </div>
   );
 };

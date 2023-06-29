@@ -1,34 +1,30 @@
-import React from "react";
-import { getCookieToken } from "store/Cookie";
-import store from "../store/index";
-import API from "./intercepter";
 // import jwt from "jsonwebtoken";
-import { API_HEADER, ROOT_API } from "../constants/api";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { SET_TOKEN } from "store/Auth";
+import { API_HEADER, ROOT_API } from "../constants/api";
 
-export async function reAuth() {
-  const refreshToken = localStorage.getItem("refressToken");
-  const getLoginEmail = localStorage.getItem("loginData");
-  const accessToken = store.getState().authToken.accessToken;
-  console.log("새로고침시 엑세스 토큰 존재?", accessToken);
+export async function useReAuth() {
+  const auth = useSelector((state) => state.authToken);
+  const dispatch = useDispatch();
 
-  if (!accessToken && refreshToken) {
+  const getrtk = localStorage.getItem("refreshToken");
+  const getemail = localStorage.getItem("email");
+  if (auth.accessToken === null && getrtk) {
     try {
-      console.log("아이디 가져올 수 있냐?", getLoginEmail);
-      console.log("새로고침시 리프레쉬토큰 존재?", refreshToken);
-      const response = axios.post(
+      const response = await axios.post(
         `${ROOT_API}/accesstoken`,
         {
-          email: getLoginEmail,
+          email: getemail,
         },
         {
           headers: {
             API_HEADER,
-            rtk: refreshToken,
+            rtk: getrtk,
           },
         }
       );
-      console.log(response);
+      dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
     } catch (error) {
       console.error("Token refresh failed", error);
     }

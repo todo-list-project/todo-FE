@@ -26,8 +26,8 @@ export function useDummyData() {
     },
     //옵션으로 5초마다 새로고침 / 다음페이지 데이터반환
     {
-      staleTime: 5000, //5초
-      cacheTime: Infinity, //제한없음
+      // staleTime: 5000, //5초
+      // cacheTime: Infinity, //제한없음
       getNextPageParam: (lastPage) => {
         if (lastPage.result.length < 20) {
           return null;

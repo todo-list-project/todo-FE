@@ -5,7 +5,7 @@ import PortalModal from "./PortalModal";
 import classnames from "classnames";
 import "./portalmodal.scss";
 
-const ModalFrame = ({ children, setOnModal, onClose, classname, isDim, zindex }) => {
+const ModalFrame = ({ children, setOnModal, onClose, classname, isDim, zindex, dimClick }) => {
   return (
     <PortalModal>
       <div className={classnames("modal")} style={{ zIndex: zindex }}>
@@ -17,7 +17,7 @@ const ModalFrame = ({ children, setOnModal, onClose, classname, isDim, zindex })
           )}
           <div className="">{children}</div>
         </div>
-        {isDim && <div className="dim" onClick={() => setOnModal(false)}></div>}
+        {isDim && <div className="dim" onClick={() => (!dimClick ? setOnModal(false) : dimClick())}></div>}
       </div>
     </PortalModal>
   );
