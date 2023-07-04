@@ -60,8 +60,6 @@ const Mypage = () => {
     navigate("/");
   };
 
-  console.log("auth", auth);
-
   return (
     <>
       {auth.accessToken !== null ? (
@@ -103,14 +101,16 @@ const Mypage = () => {
                   <li>
                     <strong>친구</strong>
                     <ul>
-                      <li
-                        className={classnames("", {
-                          "is-select": tab === "group-manage",
-                        })}
-                        onClick={() => clickTab("group-manage")}
-                      >
-                        그룹관리
-                      </li>
+                      {/*
+                        <li
+                          className={classnames("", {
+                            "is-select": tab === "group-manage",
+                          })}
+                          onClick={() => clickTab("group-manage")}
+                        >
+                          그룹관리
+                        </li>
+                       */}
                       <li
                         className={classnames("", {
                           "is-select": tab === null,

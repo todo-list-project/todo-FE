@@ -8,8 +8,12 @@ import { Route, Routes, Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useReAuth } from "util/reAuth";
 import { ReAuth } from "ReAuth";
+import { useSelector } from "react-redux";
 
 function App() {
+  // const auth = useSelector((state) => state.authToken);
+
+  // console.log('auth', auth);
   useReAuth();
   // ReAuth();
 
