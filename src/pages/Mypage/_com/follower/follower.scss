@@ -1,0 +1,17 @@
+.follower {
+  width: 100%;
+  .list {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  .list_tab {
+    color: #ccc;
+    cursor: pointer;
+    &.is_active {
+      color: black;
+      font-weight: 500;
+    }
+  }
+}

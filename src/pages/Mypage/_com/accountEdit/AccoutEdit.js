@@ -20,10 +20,13 @@ const AccountEdit = () => {
     formState: { isSubmitting, errors },
   } = useForm({ mode: "onChange" });
 
+  console.log('au: ', auth.accessToken)
+
   useEffect(() => {
     axios
       .get(`${ROOT_API}/users`, {
         headers: {
+          accept: "*/*",
           atk: auth.accessToken,
         },
       })

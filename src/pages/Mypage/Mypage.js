@@ -18,7 +18,7 @@ import GroupManage from "./_com/groupManage/GroupManage";
 const Mypage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [tab, setTab] = useState("");
+  const [tab, setTab] = useState("account-edit");
   const [createFolder, setCraeteFolder] = useState(false);
   const auth = useSelector((state) => state.authToken);
   const [modal, setModal] = useState(false);

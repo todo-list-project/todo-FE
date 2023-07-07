@@ -21,6 +21,7 @@ export async function useReAuth() {
       navigate("/login");
     }
     try {
+      console.log('rtk:', getrtk, getemail)
       const response = await axios.post(
         `${ROOT_API}/accesstoken`,
         {
@@ -33,7 +34,8 @@ export async function useReAuth() {
           },
         }
       );
-      dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
+      dispatch(SET_TOKEN({ accessToken: response.data }));
+      console.log('res: ', response.data)
     } catch (error) {
       console.error("Token refresh failed", error);
     }

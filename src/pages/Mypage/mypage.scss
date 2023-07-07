@@ -33,7 +33,9 @@
   }
   .content-item {
     display: flex;
+    max-width: 800px;
     width: 100%;
+    margin: 0 auto;
     &.is-group-manage {
       gap: 20px;
       .folder {

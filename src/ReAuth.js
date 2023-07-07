@@ -23,13 +23,15 @@ export const ReAuth = () => {
           },
           {
             headers: {
-              API_HEADER,
+              accept: "*/*",
+              "Content-Type": "application/json",
               rtk: getrtk,
             },
           }
         )
         .then(function (response) {
-          dispatch(SET_TOKEN({ accessToken: response.data.accessToken }));
+          dispatch(SET_TOKEN({ accessToken: response.data }));
+          console.log("res", response.data);
         })
         .catch(function (error) {
           console.log("재갱신 실패: ", error.response);
