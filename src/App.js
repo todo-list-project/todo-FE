@@ -5,9 +5,7 @@ import Mypage from "pages/Mypage/Mypage";
 import Regist from "pages/Regist/Regist";
 import Findpw from "pages/findpw/Findpw";
 import { Route, Routes, Outlet } from "react-router-dom";
-import { useEffect } from "react";
 import { useReAuth } from "util/reAuth";
-import { ReAuth } from "ReAuth";
 
 function App() {
   useReAuth();

@@ -1,10 +1,11 @@
-import axios from "axios";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import axios from "axios";
 import { API_HEADER, ROOT_API } from "constants/api";
 import { useSelector } from "react-redux";
 
 export function useDummyData() {
   const auth = useSelector((state) => state.authToken);
+  // console.log(auth);
 
   const infinityQueryService = axios.create({
     baseURL: `${ROOT_API}`,
@@ -26,8 +27,11 @@ export function useDummyData() {
     },
     //옵션으로 5초마다 새로고침 / 다음페이지 데이터반환
     {
-      // staleTime: 5000, //5초
-      // cacheTime: Infinity, //제한없음
+      staleTime: 5000, //5초
+      // cacheTime: 5000, //제한없음
+      // refetchInterval: 10000,
+      enabled: auth.accessToken !== null,
+      // refetchIntervalInBackground: true,
       getNextPageParam: (lastPage) => {
         if (lastPage.result.length < 20) {
           return null;

@@ -24,13 +24,19 @@ const WriteModal = ({ visible, onCancel }) => {
   const [endNewDate, setEndNewDate] = useState(null);
   const auth = useSelector((state) => state.authToken);
   const queryClient = useQueryClient();
-
+  const [titleError, setTitleError] = useState(true);
+  const [descriptionError, setDescriptionError] = useState(true);
+  // console.log(vaildCheck, " title유효성 검사");
   const changeTitle = (e) => {
-    setData({ ...data, title: e.target.value });
+    const title = e.target.value;
+    setData({ ...data, title: title });
+    setTitleError(title === "");
   };
 
   const changeArea = (e) => {
-    setData({ ...data, description: e.target.value });
+    const description = e.target.value;
+    setData({ ...data, description: description });
+    setDescriptionError(description === "");
   };
 
   const handleCheckboxChange = (e) => {
@@ -46,9 +52,16 @@ const WriteModal = ({ visible, onCancel }) => {
     }
   }, [value]);
 
+  // const invaildWrite = () => {
+  //   if (data.title === "") {
+  //     return setVaildCheckTitle(true);
+  //   } else if (data.description === "") {
+  //     return setVaildCheckTitleContent(true);
+  //   }
+  // };
+
   //서버로 글 전송
   const addTodo = async () => {
-    // console.log("data.title", data.title);
     const response = await axios.post(
       `${ROOT_API}/posts/create`,
       {
@@ -81,12 +94,15 @@ const WriteModal = ({ visible, onCancel }) => {
 
   //취소
   const handleCancel = () => {
+    setTitleError(true);
+    setDescriptionError(true);
     onCancel();
     setData({ title: "", description: "", shared: false, startDate: null, endDate: null });
   };
 
   useEffect(() => {
     if (!visible) {
+      console.log(visible);
       setData({ title: "", description: "", shared: false, startDate: null, endDate: null });
     }
   }, [visible]);
@@ -111,13 +127,19 @@ const WriteModal = ({ visible, onCancel }) => {
   // rangpicker
   return (
     <Modal open={visible} onCancel={handleCancel} footer={null}>
-      <Input style={{ marginBottom: "30px" }} placeholder="title" value={data.title} onChange={changeTitle} />
+      {!titleError ? (
+        <Input style={{ marginBottom: "30px" }} placeholder="title" value={data.title} onChange={changeTitle} />
+      ) : (
+        <Input placeholder="title" value={data.title} onChange={changeTitle} />
+      )}
+      {titleError && <p style={{ marginBottom: "30px", color: "red" }}>제목을 입력하세요</p>}
       <Input.TextArea
         value={data.description}
         onChange={changeArea}
         placeholder="Write something"
         autoSize={{ minRows: 2, maxRows: 3 }}
       />
+      {descriptionError && <p style={{ marginBottom: "30px", color: "red" }}>내용을 입력하세요</p>}
       <Checkbox checked={data.shared} onChange={handleCheckboxChange}>
         친구에게도 보이기
       </Checkbox>

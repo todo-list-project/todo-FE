@@ -29,7 +29,7 @@ const Main = () => {
         <Tab nav={["내 할일", "친구와 함께"]} classname="todo-tab" />
         <ControllerBox>
           <Filter />
-          <Button onClick={() => setVisible(true)} classname={"default-button add-button"}>
+          <Button onClick={() => setVisible(true)} size="medium" color="green">
             할일 추가
           </Button>
         </ControllerBox>

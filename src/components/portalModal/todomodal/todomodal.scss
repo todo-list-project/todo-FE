@@ -1,4 +1,4 @@
-@import 'assets/style/function.scss';
+@import "assets/style/function.scss";
 
 .info-modal {
   width: 400px;
@@ -21,4 +21,8 @@
     display: flex;
     justify-content: end;
   }
+}
+.modify-modal-title-buttonWrap {
+  display: flex;
+  justify-content: flex-end;
 }

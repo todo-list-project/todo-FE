@@ -7,8 +7,9 @@ const TodoItem = (props) => {
   // console.log("todoitem props", props);
   const [onModal, setOnModal] = useState(false);
 
-  const todoFormattedData = reFormatDate(props.element.endDate);
-  // console.log("todoFormattedData", todoFormattedData);
+  const todoFormattedStartData = reFormatDate(props.element.startDate);
+  const todoFormattedEndData = reFormatDate(props.element.endDate);
+  // console.log("todoFormattedData", todoFormattedEndData);
 
   return (
     <>
@@ -16,9 +17,17 @@ const TodoItem = (props) => {
         <h1>제목: {props.element.title}</h1>
         <div>{props.element.id}</div>
         <div>내용: {props.element.description}</div>
-        <div>{todoFormattedData}</div>
+        <div>시작날짜 : {todoFormattedStartData}</div>
+        <div>끝나는 날짜 : {todoFormattedEndData}</div>
       </div>
-      {onModal && <TodoModal todoItem={props} setOnModal={() => setOnModal()} />}
+      {onModal && (
+        <TodoModal
+          todoItem={props}
+          startDate={todoFormattedStartData}
+          endDate={todoFormattedEndData}
+          setOnModal={() => setOnModal()}
+        />
+      )}
     </>
   );
 };

@@ -1,14 +1,18 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import useIntesectionObserver from "hook/useIntesectionObserver";
+import { useCallback } from "react";
+import { changeInfiniteScrollDataToArray } from "util/changeInfiniteScrollDataToArray";
+import { useDummyData } from "../../api";
 import TodoItem from "./TodoItem";
 import "./todo.scss";
-import { useDummyData } from "../../api";
-import { changeInfiniteScrollDataToArray } from "util/changeInfiniteScrollDataToArray";
-import useIntesectionObserver from "hook/useIntesectionObserver";
 
 const TodoList = () => {
-  const { data, fetchNextPage, hasNextPage } = useDummyData();
+  const { data, fetchNextPage, hasNextPage, isSuccess } = useDummyData();
+
   // console.log(data);
-  const todoData = changeInfiniteScrollDataToArray(data);
+  let todoData;
+  if (isSuccess) {
+    todoData = changeInfiniteScrollDataToArray(data);
+  }
   // console.log("뿌려지는 todoData", todoData);
   const onIntersection = useCallback(
     (entries) => {
@@ -32,9 +36,10 @@ const TodoList = () => {
   return (
     <div>
       <div className="todo-list">
-        {todoData.map((element, idx) => {
-          return <TodoItem element={element} key={idx} />;
-        })}
+        {todoData &&
+          todoData.map((element, idx) => {
+            return <TodoItem element={element} key={idx} />;
+          })}
       </div>
       {hasNextPage && (
         <div
