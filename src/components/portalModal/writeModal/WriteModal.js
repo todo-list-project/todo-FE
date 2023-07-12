@@ -87,7 +87,13 @@ const WriteModal = ({ visible, onCancel }) => {
 
   //전송
   const handleSave = useCallback(() => {
-    mutate(data);
+    if (titleError === false && descriptionError === false) {
+      mutate(data);
+      setTitleError(true);
+      setDescriptionError(true);
+    } else {
+      return;
+    }
     onCancel();
     // setData({ title: "", description: "", shared: false, startDate: null, endDate: null });
   }, [mutate, data, onCancel]);
