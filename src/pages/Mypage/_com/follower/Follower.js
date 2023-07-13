@@ -126,10 +126,10 @@ const Follower = () => {
             </div>
           ))}
         {
-          // followers.length === 0 && tab === 0 && <div>팔로워가 없습니다.</div>
+          followers.length === 0 && tab === 0 && <div>팔로워가 없습니다.</div>
         }
         {
-          // followings.length === 0 && tab === 0 && <div>팔로잉이 없습니다.</div>
+          followings.length === 0 && tab === 1 && <div>팔로잉이 없습니다.</div>
         }
       </div>
     </div>

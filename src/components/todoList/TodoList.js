@@ -4,11 +4,17 @@ import "./todo.scss";
 import { useDummyData } from "../../api";
 import { changeInfiniteScrollDataToArray } from "util/changeInfiniteScrollDataToArray";
 import useIntesectionObserver from "hook/useIntesectionObserver";
+import { useSelector } from "react-redux";
 
 const TodoList = () => {
-  const { data, fetchNextPage, hasNextPage } = useDummyData();
+  const auth = useSelector((state) => state.authToken);
+
+  const { data, fetchNextPage, hasNextPage, isSuccess } = useDummyData();
   // console.log(data);
-  const todoData = changeInfiniteScrollDataToArray(data);
+  let todoData;
+  if (isSuccess) {
+    todoData = changeInfiniteScrollDataToArray(data);
+  }
   // console.log("뿌려지는 todoData", todoData);
   const onIntersection = useCallback(
     (entries) => {
@@ -32,7 +38,7 @@ const TodoList = () => {
   return (
     <div>
       <div className="todo-list">
-        {todoData.map((element, idx) => {
+        {todoData && todoData.map((element, idx) => {
           return <TodoItem element={element} key={idx} />;
         })}
       </div>
